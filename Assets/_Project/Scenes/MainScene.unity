@@ -926,12 +926,12 @@ PrefabInstance:
     - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: sensX
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: sensY
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
