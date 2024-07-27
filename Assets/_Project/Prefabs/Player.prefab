@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2912164085041322593}
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 2912164085041322593}
   - component: {fileID: 7405741147613856124}
   - component: {fileID: 6537015091378038643}
+  - component: {fileID: 2644770736310830791}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -182,7 +183,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3108251737661536531}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   groundDrag: 5
-  jumpForce: 12
+  jumpForce: 8.5
   jumpCooldown: 0.25
   airMultiplier: 0.4
   walkSpeed: 0
@@ -226,6 +227,23 @@ MonoBehaviour:
     m_Bits: 1024
   orientation: {fileID: 4244211781072309332}
   playerCollider: {fileID: 7831556725828690650}
+--- !u!114 &2644770736310830791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108251737661536531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87fe71abaae3664db3f459ccad0c561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackKey: 323
+  grappleKey: 324
+  Slot1: 49
+  Slot2: 50
+  grapplingHook: {fileID: 0}
 --- !u!1 &8808510303045680121
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 8808510303045680121}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
