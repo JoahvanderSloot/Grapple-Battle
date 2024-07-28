@@ -243,7 +243,14 @@ MonoBehaviour:
   grappleKey: 324
   Slot1: 49
   Slot2: 50
+  katana: {fileID: 0}
+  star: {fileID: 0}
+  itemSlot: 1
+  orientation: {fileID: 4244211781072309332}
   grapplingHook: {fileID: 0}
+  starPref: {fileID: 5713108995022850134, guid: 74a5e13769b65da4683b656b696d1834,
+    type: 3}
+  starCount: 10
 --- !u!1 &8808510303045680121
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +276,7 @@ Transform:
   m_GameObject: {fileID: 8808510303045680121}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
