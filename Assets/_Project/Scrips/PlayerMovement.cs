@@ -1,7 +1,4 @@
-using System.Linq;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
-using static UnityEngine.LightAnchor;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -130,50 +127,32 @@ public class PlayerMovement : MonoBehaviour
 
         float playerHeight = playerCollider.height * playerCollider.gameObject.transform.localScale.y;
         float detectionRadius = playerHeight * 0.5f - 0.3f;
-        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y * 1.5f, transform.position.z);
+        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 1.5f, transform.position.z);
 
         Collider[] hitColliders = Physics.OverlapSphere(wallJumpSpherePos, detectionRadius, whatIsGround);
         bool playerCanWalljump = false;
+        Vector3 wallPosition = Vector3.zero;
 
         foreach (Collider hitCollider in hitColliders)
         {
+            wallPosition = hitCollider.ClosestPoint(transform.position);
             playerCanWalljump = true;
             break;
         }
 
-        if(playerCanWalljump)
+        if (playerCanWalljump)
         {
             readyToJump = false;
 
+            // Calculate the direction away from the wall
+            Vector3 wallDirection = (transform.position - wallPosition).normalized;
+            Vector3 jumpDirection = Vector3.up + wallDirection;
+
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            rb.AddForce(Vector3.up + Vector3.back * wallJumpForce, ForceMode.Impulse);
+            rb.AddForce(jumpDirection * wallJumpForce, ForceMode.Impulse);
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
-
-        /*
-        // Cast rays in a circle around the player to check for walls
-        int rayCount = 36; // Number of rays (10 degrees between each ray)
-        float angleStep = 360f / rayCount;
-
-        for (int i = 0; i < rayCount; i++)
-        {
-            float angle = i * angleStep;
-            Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0, Mathf.Sin(angle * Mathf.Deg2Rad));
-
-            if (Physics.Raycast(transform.position, direction, out RaycastHit hit, detectionRadius, whatIsGround))
-            {
-                readyToJump = false;
-                // Calculate jump direction
-                Vector3 jumpDirection = hit.normal + Vector3.up;
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                rb.AddForce(jumpDirection * wallJumpForce, ForceMode.Impulse);
-
-                Invoke(nameof(ResetJump), jumpCooldown);
-                break;
-            }
-        }
-        */
     }
 
     private void OnDrawGizmos()
@@ -187,21 +166,8 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, endPosition);
 
         float detectionRadius = playerHeight * 0.5f - 0.3f;
-        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y * 1.5f, transform.position.z);
+        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 1.5f, transform.position.z);
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(wallJumpSpherePos, detectionRadius);
-
-        /*// Draw gizmos for wall detection rays
-        float detectionRadius = playerHeight * 0.5f - 0.3f;
-        int rayCount = 36;
-        float angleStep = 360f / rayCount;
-
-        Gizmos.color = Color.blue;
-        for (int i = 0; i < rayCount; i++)
-        {
-            float angle = i * angleStep;
-            Vector3 direction = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), 0, Mathf.Sin(angle * Mathf.Deg2Rad));
-            Gizmos.DrawLine(transform.position, transform.position + direction * detectionRadius);
-        }*/
     }
 }

@@ -1209,6 +1209,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035602778}
   m_CullTransparentMesh: 1
+--- !u!114 &1389005620 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049253715459473915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba4ecb1dabddb5946a6cb8bdd7c4bbf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1475398843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,6 +1621,11 @@ PrefabInstance:
       propertyPath: orientation
       value: 
       objectReference: {fileID: 260778081}
+    - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 1389005620}
     - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: player
@@ -1726,12 +1743,27 @@ PrefabInstance:
     - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
       propertyPath: wallJumpForce
-      value: 50
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7405741147613856124, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
       propertyPath: m_Mass
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
