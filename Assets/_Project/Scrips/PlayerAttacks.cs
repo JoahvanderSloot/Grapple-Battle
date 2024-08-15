@@ -24,6 +24,10 @@ public class PlayerAttacks : MonoBehaviour
 
     [SerializeField] GameObject playerCam;
 
+    [SerializeField] GrapplingHook grapplingHookScript;
+
+    bool isGrappling = false;
+
     [Header("Cooldown")]
     [SerializeField] float attackCooldown = 0.5f;
     private float lastAttackTime = 0f;
@@ -32,7 +36,7 @@ public class PlayerAttacks : MonoBehaviour
     {
         CurrentItem();
 
-        if (Input.GetKeyDown(attackKey) && Time.time >= lastAttackTime + attackCooldown)
+        if (Input.GetKeyDown(attackKey) && Time.time >= lastAttackTime + attackCooldown && !isGrappling)
         {
             lastAttackTime = Time.time;
 
@@ -48,9 +52,27 @@ public class PlayerAttacks : MonoBehaviour
             }
         }
 
+        if(isGrappling && Input.GetKeyDown(attackKey))
+        {
+            Vector3 playerToGrapple = grapplingHookScript.GetGrapplePoint() - playerCam.transform.position;
+            playerToGrapple.Normalize();
+
+            GetComponent<Rigidbody>().AddForce(playerToGrapple * grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
+
+            grapplingHookScript.StopGrapple();
+            isGrappling = false;
+        }
+
         if (Input.GetKeyDown(grappleKey))
         {
-            // Shoot grappling hook
+            grapplingHookScript.StartGrapple();
+            isGrappling = true;
+            
+        }
+        if (Input.GetKeyUp(grappleKey))
+        {
+            grapplingHookScript.StopGrapple();
+            isGrappling = false;
         }
     }
 
@@ -73,6 +95,11 @@ public class PlayerAttacks : MonoBehaviour
         else if (Input.GetKeyDown(Slot2))
         {
             itemSlot = 2;
+        }
+
+        if(starCount <= 0)
+        {
+            itemSlot = 1;
         }
 
         if (itemSlot > 2)

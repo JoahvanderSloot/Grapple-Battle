@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 2644770736310830791}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,10 +247,14 @@ MonoBehaviour:
   star: {fileID: 0}
   itemSlot: 1
   orientation: {fileID: 4244211781072309332}
-  grapplingHook: {fileID: 0}
+  grapplingHook: {fileID: 711400910139721061, guid: b7a105a3b8a47984c9db3304bde5f337,
+    type: 3}
   starPref: {fileID: 5713108995022850134, guid: 74a5e13769b65da4683b656b696d1834,
     type: 3}
   starCount: 10
+  playerCam: {fileID: 0}
+  grapplingHookScript: {fileID: 0}
+  attackCooldown: 0.5
 --- !u!1 &8808510303045680121
 GameObject:
   m_ObjectHideFlags: 0
