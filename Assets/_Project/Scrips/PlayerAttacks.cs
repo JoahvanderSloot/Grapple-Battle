@@ -29,7 +29,7 @@ public class PlayerAttacks : MonoBehaviour
     bool isGrappling = false;
 
     [Header("Cooldown")]
-    [SerializeField] float attackCooldown = 0.5f;
+    [SerializeField] float attackCooldown = 0.25f;
     private float lastAttackTime = 0f;
 
     void Update()

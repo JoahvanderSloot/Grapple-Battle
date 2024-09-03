@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
@@ -7,8 +6,10 @@ public class GrapplingHook : MonoBehaviour
     private Vector3 grapplePoint;
     public LayerMask whatIsGround;
     public Transform gunTip, camera, player;
-    private float maxDistance = 100f;
+    [SerializeField] private float maxDistance = 100f;
     private SpringJoint joint;
+
+    public bool canGrapple = false;
 
     public Vector3 GetGrapplePoint()
     {
@@ -23,6 +24,19 @@ public class GrapplingHook : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         StopGrapple();
+    }
+
+    private void Update()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGround))
+        {
+            canGrapple = true;
+        }
+        else
+        {
+            canGrapple= false;
+        }
     }
 
     private void LateUpdate()

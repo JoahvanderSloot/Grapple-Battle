@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, endPosition);
 
         float detectionRadius = playerHeight * 0.5f - 0.3f;
-        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 1.5f, transform.position.z);
+        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 0.5f, transform.position.z);
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(wallJumpSpherePos, detectionRadius);
     }

@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 13895107}
   - component: {fileID: 13895106}
   - component: {fileID: 13895105}
+  - component: {fileID: 13895109}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -225,6 +226,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &13895109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13895104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed6b56853e0f8c46b1b662f897b6a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 210901506}
+  grapplingGun: {fileID: 1518350583}
+  crossHair: {fileID: 1035602780}
 --- !u!1 &84401759
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +458,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &210901506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3108251737661536531, guid: 55df398c1337dd14ea2bff032f69a017,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049253715459473915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &260778081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4244211781072309332, guid: 55df398c1337dd14ea2bff032f69a017,
@@ -918,7 +940,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 745253704842426059}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1518350583}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e672ee1fca484a41a179a8bb8503204, type: 3}
@@ -1215,7 +1237,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2049253715459473915}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 210901506}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba4ecb1dabddb5946a6cb8bdd7c4bbf7, type: 3}
@@ -1432,6 +1454,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1518350583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4697282005982701544, guid: fe2c505add56433419ed8a6a33ce55ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 745253704842426059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1541874711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,6 +1659,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 728245876}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: maxDistance
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 8180222546406216320, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_Name
@@ -1675,6 +1708,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 711400910139721061, guid: b7a105a3b8a47984c9db3304bde5f337,
         type: 3}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
       propertyPath: grapplingHookScript
