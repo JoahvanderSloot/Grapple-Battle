@@ -26,6 +26,16 @@ public class NinjaStar : MonoBehaviour
     {
         if (canDestroy)
         {
+            HitPoints hpScript = other.GetComponent<HitPoints>();
+            if (hpScript != null)
+            {
+                hpScript.HP--;
+            }
+            else
+            {
+                Debug.Log("Object does not have HP script");
+            }
+
             Destroy(gameObject);
         }
     }

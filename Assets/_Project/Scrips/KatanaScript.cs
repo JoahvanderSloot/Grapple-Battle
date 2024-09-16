@@ -22,27 +22,17 @@ public class KatanaScript : MonoBehaviour
 
         if (hit)
         {
-            Debug.Log("Raycast hit something: " + hitInfo.collider.name);
-            if (hitInfo.collider.gameObject.CompareTag("Player"))
+            HitPoints hpScript = hitInfo.collider.GetComponent<HitPoints>();
+            if (hpScript != null)
             {
-                GameObject attackedPlayer = hitInfo.collider.gameObject;
-                PlayerMovement attackedPlayerScript = attackedPlayer.GetComponent<PlayerMovement>();
+                hpScript.HP -= 2;
             }
-            if (hitInfo.collider.gameObject.CompareTag("Rope"))
+            else
             {
-                GameObject rope = hitInfo.collider.gameObject;
-                RopeScript scriptRope = rope.GetComponent<RopeScript>();
-
-                if (scriptRope != null)
-                {
-                    scriptRope.isCut = true;
-                }
+                Debug.Log("Object does not have HP script");
             }
 
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit anything.");
+
         }
     }
 

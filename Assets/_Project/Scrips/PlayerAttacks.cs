@@ -3,11 +3,11 @@ using UnityEngine;
 public class PlayerAttacks : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode attackKey = KeyCode.Mouse0;
-    public KeyCode grappleKey = KeyCode.Mouse1;
+    public KeyCode attackKey;
+    public KeyCode grappleKey;
 
-    public KeyCode Slot1 = KeyCode.Alpha1;
-    public KeyCode Slot2 = KeyCode.Alpha2;
+    public KeyCode slot1Key;
+    public KeyCode slot2Key;
 
     [Header("Items")]
     [SerializeField] GameObject katana;
@@ -31,6 +31,15 @@ public class PlayerAttacks : MonoBehaviour
     [Header("Cooldown")]
     [SerializeField] float attackCooldown = 0.25f;
     private float lastAttackTime = 0f;
+
+    private void Start()
+    {
+        attackKey = PlayerSettings.Instance.attack;
+        grappleKey = PlayerSettings.Instance.grapple;
+
+        slot1Key = PlayerSettings.Instance.slot1;
+        slot2Key = PlayerSettings.Instance.slot2;
+    }
 
     void Update()
     {
@@ -88,11 +97,11 @@ public class PlayerAttacks : MonoBehaviour
             itemSlot++;
         }
 
-        if (Input.GetKeyDown(Slot1))
+        if (Input.GetKeyDown(slot1Key))
         {
             itemSlot = 1;
         }
-        else if (Input.GetKeyDown(Slot2))
+        else if (Input.GetKeyDown(slot2Key))
         {
             itemSlot = 2;
         }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SILB_Generics<T> : MonoBehaviour where T : Component

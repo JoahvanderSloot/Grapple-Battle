@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float sprintSpeed;
 
     [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode jumpKey;
+    public KeyCode crouchKey;
 
     [Header("Ground Check")]
     public LayerMask whatIsGround;
@@ -29,11 +30,17 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-
     [SerializeField] private CapsuleCollider playerCollider;
+
+    [Header("Camera")]
+    [SerializeField] PlayerCam playerCam;
+    bool isCrouching;
 
     private void Start()
     {
+        jumpKey = PlayerSettings.Instance.jump;
+        crouchKey = PlayerSettings.Instance.crouch;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
@@ -49,15 +56,25 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
 
         // handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
+        rb.drag = grounded ? groundDrag : 0;
 
+        // Reset position if player falls
         if (transform.position.y <= -10)
         {
             transform.position = new Vector3(0, 0, 0);
         }
+
+        // Adjust mass based on crouching in the air
+        if (!grounded && Input.GetKey(crouchKey))
+        {
+            rb.mass = 5;
+        }
+        else
+        {
+            rb.mass = 2;
+        }
+
+        playerCam.FieldOfView(rb.velocity.magnitude, isCrouching);
     }
 
     private void FixedUpdate()
@@ -71,28 +88,37 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // when to jump
+        // Jumping
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-
             Jump();
-
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        // Crouching
+        if (Input.GetKeyDown(crouchKey))
+        {
+            Crouch();
+        }
+        else if (Input.GetKeyUp(crouchKey))
+        {
+            moveSpeed = 7;
+            groundDrag = 5;
+            readyToJump = true;
+            isCrouching = false;
         }
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
+        // Calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // on ground 
+        // Apply movement force
         if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-
-        // in air
-        else if (!grounded)
+        else
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
@@ -100,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // limit velocity if needed
+        // Limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -110,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        // reset y velocity
+        // Reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -121,13 +147,22 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
     }
 
+    private void Crouch()
+    {
+        moveSpeed = 3;
+        groundDrag = 8;
+
+        readyToJump = false;
+        isCrouching = true;
+    }
+
     private void WallJump()
     {
         if (grounded || !Input.GetKey(jumpKey) || !readyToJump) return;
 
         float playerHeight = playerCollider.height * playerCollider.gameObject.transform.localScale.y;
         float detectionRadius = playerHeight * 0.5f - 0.3f;
-        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 1.5f, transform.position.z);
+        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
 
         Collider[] hitColliders = Physics.OverlapSphere(wallJumpSpherePos, detectionRadius, whatIsGround);
         bool playerCanWalljump = false;
@@ -166,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, endPosition);
 
         float detectionRadius = playerHeight * 0.5f - 0.3f;
-        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y / 0.5f, transform.position.z);
+        Vector3 wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(wallJumpSpherePos, detectionRadius);
     }
