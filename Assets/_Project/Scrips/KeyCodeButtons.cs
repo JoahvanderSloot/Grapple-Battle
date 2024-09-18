@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyCodeButtons : MonoBehaviour
 {
@@ -9,43 +10,98 @@ public class KeyCodeButtons : MonoBehaviour
     bool waitForKeyInput = false;
     [SerializeField] TextMeshProUGUI buttonText;
 
+    private void Start()
+    {
+        UpdateButtonText();
+    }
+
     public void SetKeyCode()
     {
         waitForKeyInput = true;
-        buttonText.text = key;
+        Image buttonColor = GetComponent<Image>();
+        buttonColor.color = Color.gray;
     }
 
     private void Update()
     {
         if (waitForKeyInput)
         {
-            SetKey(key);
+            DetectKeyPress();
+        }
+        else
+        {
+            UpdateButtonText();
         }
     }
 
-    private void SetKey(string key)
+    private void DetectKeyPress()
     {
-        KeyCode newKey = KeyCode.G;
+        if (Input.anyKeyDown)
+        {
+            foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(keyCode))
+                {
+                    Image buttonColor = GetComponent<Image>();
+                    buttonColor.color = Color.white;
+                    SetKey(keyCode);
+                    waitForKeyInput = false;
+                    UpdateButtonText();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void SetKey(KeyCode newKey)
+    {
         switch (key)
         {
             case "jump":
                 playerSettings.jump = newKey;
                 break;
             case "crouch":
-                playerSettings.jump = newKey;
+                playerSettings.crouch = newKey;
                 break;
             case "attack":
-                playerSettings.jump = newKey;
+                playerSettings.attack = newKey;
                 break;
             case "grapple":
-                playerSettings.jump = newKey;
+                playerSettings.grapple = newKey;
                 break;
             case "slot1":
-                playerSettings.jump = newKey;
+                playerSettings.slot1 = newKey;
                 break;
             case "slot2":
-                playerSettings.jump = newKey;
+                playerSettings.slot2 = newKey;
                 break;
+        }
+    }
+
+    private void UpdateButtonText()
+    {
+        KeyCode currentKey = GetCurrentKey();
+        buttonText.text = key + "\n" + currentKey.ToString();
+    }
+
+    private KeyCode GetCurrentKey()
+    {
+        switch (key)
+        {
+            case "jump":
+                return playerSettings.jump;
+            case "crouch":
+                return playerSettings.crouch;
+            case "attack":
+                return playerSettings.attack;
+            case "grapple":
+                return playerSettings.grapple;
+            case "slot1":
+                return playerSettings.slot1;
+            case "slot2":
+                return playerSettings.slot2;
+            default:
+                return KeyCode.None;
         }
     }
 }
