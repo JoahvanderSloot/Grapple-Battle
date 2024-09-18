@@ -1,19 +1,29 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class KeyCodeButtons : MonoBehaviour
 {
-    public PlayerSettings playerSettings;
+    public playerSettings playerSettings;
 
     [SerializeField] string key;
     bool waitForKeyInput = false;
     [SerializeField] TextMeshProUGUI buttonText;
+    List<KeyCode> keyBinds;
 
     private void Start()
     {
+        keyBinds = new List<KeyCode>();
         UpdateButtonText();
+
+        keyBinds.AddRange(typeof(playerSettings).GetFields()
+            .Where(f => f.FieldType == typeof(KeyCode))
+            .Select(f => (KeyCode)f.GetValue(playerSettings)));
     }
+
 
     public void SetKeyCode()
     {
@@ -42,12 +52,19 @@ public class KeyCodeButtons : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyCode))
                 {
-                    Image buttonColor = GetComponent<Image>();
-                    buttonColor.color = Color.white;
-                    SetKey(keyCode);
-                    waitForKeyInput = false;
-                    UpdateButtonText();
-                    break;
+                    if (!keyBinds.Contains(keyCode))
+                    {
+                        Image buttonColor = GetComponent<Image>();
+                        buttonColor.color = Color.white;
+                        SetKey(keyCode);
+                        waitForKeyInput = false;
+                        UpdateButtonText();
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("This key is already being used");
+                    }
                 }
             }
         }

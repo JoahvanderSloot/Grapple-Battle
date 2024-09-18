@@ -38,8 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        jumpKey = PlayerSettings.Instance.jump;
-        crouchKey = PlayerSettings.Instance.crouch;
+        jumpKey = playerSettings.Instance.jump;
+        crouchKey = playerSettings.Instance.crouch;
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;

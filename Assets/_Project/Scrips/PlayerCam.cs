@@ -16,8 +16,8 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
-        sensX = PlayerSettings.Instance.sens;
-        sensY = PlayerSettings.Instance.sens;
+        sensX = playerSettings.Instance.sens;
+        sensY = playerSettings.Instance.sens;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

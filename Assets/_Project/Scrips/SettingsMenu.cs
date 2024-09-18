@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public PlayerSettings playerSettings;
+    public playerSettings playerSettings;
 
     [Header("Sensitivity")]
     [SerializeField] private Slider sensSlider;

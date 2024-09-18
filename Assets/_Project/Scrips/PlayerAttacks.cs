@@ -34,11 +34,11 @@ public class PlayerAttacks : MonoBehaviour
 
     private void Start()
     {
-        attackKey = PlayerSettings.Instance.attack;
-        grappleKey = PlayerSettings.Instance.grapple;
+        attackKey = playerSettings.Instance.attack;
+        grappleKey = playerSettings.Instance.grapple;
 
-        slot1Key = PlayerSettings.Instance.slot1;
-        slot2Key = PlayerSettings.Instance.slot2;
+        slot1Key = playerSettings.Instance.slot1;
+        slot2Key = playerSettings.Instance.slot2;
     }
 
     void Update()
