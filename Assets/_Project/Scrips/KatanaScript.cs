@@ -6,6 +6,7 @@ public class KatanaScript : MonoBehaviour
     [SerializeField] Transform raySpawn;
     [SerializeField] float reach;
     [SerializeField] Collider katanaCollider;
+    [SerializeField] float kbStrength;
 
     void Start()
     {
@@ -22,16 +23,25 @@ public class KatanaScript : MonoBehaviour
 
         if (hit)
         {
-            HitPoints hpScript = hitInfo.collider.GetComponent<HitPoints>();
-            if (hpScript != null)
+            Knockback knockbackScript = hitInfo.collider.GetComponent<Knockback>();
+            if (knockbackScript != null)
             {
-                hpScript.HP -= 2;
+                knockbackScript.AddKnockback(kbStrength);
+                knockbackScript.kbDirection = raySpawn.forward;
+                knockbackScript.HP--;
             }
             else
             {
-                Debug.Log("Object does not have HP script");
+                HitPoints hpScript = hitInfo.collider.GetComponent<HitPoints>();
+                if (hpScript != null)
+                {
+                    hpScript.HP--;
+                }
+                else
+                {
+                    Debug.Log("Object does not have HP script");
+                }
             }
-
 
         }
     }

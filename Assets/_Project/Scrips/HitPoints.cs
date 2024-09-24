@@ -6,7 +6,12 @@ public class HitPoints : MonoBehaviour
 
     private void Update()
     {
-        if(HP <= 0)
+        DestroyOnKill();
+    }
+
+    protected void DestroyOnKill()
+    {
+        if (HP <= 0)
         {
             Destroy(gameObject);
         }

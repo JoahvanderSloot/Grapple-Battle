@@ -5,6 +5,7 @@ public class NinjaStar : MonoBehaviour
     [Header("Shooting")]
     Rigidbody rb;
     [SerializeField] float shootSpeed;
+    [SerializeField] float kbStrength;
 
     GameObject playerCam;
     Vector3 moveDirection;
@@ -26,19 +27,30 @@ public class NinjaStar : MonoBehaviour
     {
         if (canDestroy)
         {
-            HitPoints hpScript = other.GetComponent<HitPoints>();
-            if (hpScript != null)
+            Knockback knockbackScript = other.GetComponent<Knockback>();
+            if (knockbackScript != null)
             {
-                hpScript.HP--;
+                knockbackScript.AddKnockback(kbStrength);
+                knockbackScript.kbDirection = rb.velocity.normalized;
+                knockbackScript.HP--;
             }
             else
             {
-                Debug.Log("Object does not have HP script");
+                HitPoints hpScript = other.GetComponent<HitPoints>();
+                if (hpScript != null)
+                {
+                    hpScript.HP--;
+                }
+                else
+                {
+                    Debug.Log("Object does not have HP script");
+                }
             }
 
             Destroy(gameObject);
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {

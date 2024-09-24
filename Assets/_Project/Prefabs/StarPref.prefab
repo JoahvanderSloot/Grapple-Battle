@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootSpeed: 150
+  kbStrength: 5
 --- !u!54 &6984225340863634598
 Rigidbody:
   m_ObjectHideFlags: 0

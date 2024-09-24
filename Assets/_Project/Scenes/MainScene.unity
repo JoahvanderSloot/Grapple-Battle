@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028396, g: 0.22571427, b: 0.30692327, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028381, g: 0.22571398, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1491,7 +1491,8 @@ GameObject:
   - component: {fileID: 1515919479}
   - component: {fileID: 1515919478}
   - component: {fileID: 1515919477}
-  - component: {fileID: 1515919476}
+  - component: {fileID: 1515919481}
+  - component: {fileID: 1515919482}
   m_Layer: 10
   m_Name: testwall (1)
   m_TagString: Untagged
@@ -1499,19 +1500,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1515919476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1515919475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fda272f2d683374295ae71fcb4b16f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 10
 --- !u!65 &1515919477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1598,6 +1586,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1515919481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515919475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc3071fa77c66648be24fc405459169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 10
+  kbDirection: {x: 0, y: 0, z: 0}
+--- !u!54 &1515919482
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515919475}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1518350583 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4697282005982701544, guid: fe2c505add56433419ed8a6a33ce55ff,
@@ -1772,6 +1801,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: kbStrength
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2166143768858054777, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
