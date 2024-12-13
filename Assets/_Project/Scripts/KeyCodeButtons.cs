@@ -13,6 +13,7 @@ public class KeyCodeButtons : MonoBehaviour
     bool waitForKeyInput = false;
     [SerializeField] TextMeshProUGUI buttonText;
     List<KeyCode> keyBinds;
+    [SerializeField] List<Button> allButtons;
 
     private void Start()
     {
@@ -46,6 +47,12 @@ public class KeyCodeButtons : MonoBehaviour
 
     private void DetectKeyPress()
     {
+
+        foreach (Button _b in allButtons)
+        {
+            _b.interactable = false;
+        }
+
         if (Input.anyKeyDown)
         {
             foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
@@ -99,6 +106,11 @@ public class KeyCodeButtons : MonoBehaviour
     {
         KeyCode currentKey = GetCurrentKey();
         buttonText.text = key + "\n" + currentKey.ToString();
+
+        foreach (Button _b in allButtons)
+        {
+            _b.interactable = true;
+        }
     }
 
     private KeyCode GetCurrentKey()
