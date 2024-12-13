@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerTurn : MonoBehaviour
 {
-    public Transform playerPos;
+    public Transform m_PlayerPos;
 
     private void Update()
     {
-        playerPos.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        m_PlayerPos.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
 }

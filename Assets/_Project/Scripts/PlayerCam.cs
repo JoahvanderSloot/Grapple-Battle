@@ -2,69 +2,69 @@ using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
 {
-    public float sensY;
-    public float sensX;
+    public float m_SensY;
+    public float m_SensX;
 
-    public Transform orientation;
+    public Transform m_Orientation;
 
-    float xRotation;
-    float yRotation;
+    float m_xRotation;
+    float m_yRotation;
 
-    Camera cam;
+    Camera m_cam;
 
-    bool crouchCam = false;
+    bool m_crouchCam = false;
 
     private void Start()
     {
-        sensX = playerSettings.Instance.sens;
-        sensY = playerSettings.Instance.sens;
+        m_SensX = playerSettings.Instance.m_Sens;
+        m_SensY = playerSettings.Instance.m_Sens;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        cam = GetComponent<Camera>();
+        m_cam = GetComponent<Camera>();
     }
 
     private void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+        float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
+        float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;
 
-        yRotation += mouseX;
+        m_yRotation += _mouseX;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        m_xRotation -= _mouseY;
+        m_xRotation = Mathf.Clamp(m_xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
+        m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
     }
 
-    public void FieldOfView(float targetFOV, bool crouch)
+    public void FieldOfView(float _targetFOV, bool _crouch)
     {
-        float currentFOV = cam.fieldOfView;
-        float smoothSpeed = 10f;
+        float _currentFOV = m_cam.fieldOfView;
+        float _smoothSpeed = 10f;
 
-        float newFOV = Mathf.Lerp(currentFOV, 60 + targetFOV * 1.5f, Time.deltaTime * smoothSpeed);
+        float _newFOV = Mathf.Lerp(_currentFOV, 60 + _targetFOV * 1.5f, Time.deltaTime * _smoothSpeed);
 
-        if (crouch)
+        if (_crouch)
         {
-            newFOV = Mathf.Lerp(currentFOV, 57, Time.deltaTime * smoothSpeed);
-            if (!crouchCam)
+            _newFOV = Mathf.Lerp(_currentFOV, 57, Time.deltaTime * _smoothSpeed);
+            if (!m_crouchCam)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y - 0.05f, transform.position.z);
-                crouchCam = true;
+                m_crouchCam = true;
             }
         }
         else
         {
-            if(crouchCam)
+            if(m_crouchCam)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
             }
-            crouchCam = false;
+            m_crouchCam = false;
         }
 
-        cam.fieldOfView = newFOV;
+        m_cam.fieldOfView = _newFOV;
     }
 
 }

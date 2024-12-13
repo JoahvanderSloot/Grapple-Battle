@@ -3,85 +3,85 @@ using UnityEngine;
 public class PlayerAttacks : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode attackKey;
-    public KeyCode grappleKey;
+    public KeyCode m_AttackKey;
+    public KeyCode m_GrappleKey;
 
-    public KeyCode slot1Key;
-    public KeyCode slot2Key;
+    public KeyCode m_Slot1Key;
+    public KeyCode m_Slot2Key;
 
     [Header("Items")]
-    [SerializeField] GameObject katana;
-    [SerializeField] GameObject star;
-    [SerializeField] int itemSlot = 1;
+    [SerializeField] GameObject m_katana;
+    [SerializeField] GameObject m_star;
+    [SerializeField] int m_itemSlot = 1;
 
     [Header("Shooting")]
-    [SerializeField] Transform orientation;
+    [SerializeField] Transform m_orientation;
 
-    [SerializeField] GameObject grapplingHook;
+    [SerializeField] GameObject m_grapplingHook;
 
-    [SerializeField] GameObject starPref;
-    [SerializeField] int starCount = 10;
+    [SerializeField] GameObject m_starPref;
+    [SerializeField] int m_starCount = 10;
 
-    [SerializeField] GameObject playerCam;
+    [SerializeField] GameObject m_playerCam;
 
-    [SerializeField] GrapplingHook grapplingHookScript;
+    [SerializeField] GrapplingHook m_grapplingHookScript;
 
-    bool isGrappling = false;
+    bool m_isGrappling = false;
 
     [Header("Cooldown")]
-    [SerializeField] float attackCooldown = 0.25f;
-    private float lastAttackTime = 0f;
+    [SerializeField] float m_attackCooldown = 0.25f;
+    float m_lastAttackTime = 0f;
 
     private void Start()
     {
-        attackKey = playerSettings.Instance.attack;
-        grappleKey = playerSettings.Instance.grapple;
+        m_AttackKey = playerSettings.Instance.m_Attack;
+        m_GrappleKey = playerSettings.Instance.m_Grapple;
 
-        slot1Key = playerSettings.Instance.slot1;
-        slot2Key = playerSettings.Instance.slot2;
+        m_Slot1Key = playerSettings.Instance.m_Slot1;
+        m_Slot2Key = playerSettings.Instance.m_Slot2;
     }
 
     void Update()
     {
         CurrentItem();
 
-        if (Input.GetKeyDown(attackKey) && Time.time >= lastAttackTime + attackCooldown && !isGrappling)
+        if (Input.GetKeyDown(m_AttackKey) && Time.time >= m_lastAttackTime + m_attackCooldown && !m_isGrappling)
         {
-            lastAttackTime = Time.time;
+            m_lastAttackTime = Time.time;
 
-            if (itemSlot == 1)
+            if (m_itemSlot == 1)
             {
-                KatanaScript katanaScript = katana.GetComponent<KatanaScript>();
-                katanaScript.Attack();
+                KatanaScript _katanaScript = m_katana.GetComponent<KatanaScript>();
+                _katanaScript.Attack();
             }
-            else if (itemSlot == 2 && starCount >= 1)
+            else if (m_itemSlot == 2 && m_starCount >= 1)
             {
-                Instantiate(starPref, playerCam.transform.position, playerCam.transform.rotation);
-                starCount--;
+                Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
+                m_starCount--;
             }
         }
 
-        if(isGrappling && Input.GetKeyDown(attackKey))
+        if(m_isGrappling && Input.GetKeyDown(m_AttackKey))
         {
-            Vector3 playerToGrapple = grapplingHookScript.GetGrapplePoint() - playerCam.transform.position;
-            playerToGrapple.Normalize();
+            Vector3 _playerToGrapple = m_grapplingHookScript.GetGrapplePoint() - m_playerCam.transform.position;
+            _playerToGrapple.Normalize();
 
-            GetComponent<Rigidbody>().AddForce(playerToGrapple * grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
+            GetComponent<Rigidbody>().AddForce(_playerToGrapple * m_grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
 
-            grapplingHookScript.StopGrapple();
-            isGrappling = false;
+            m_grapplingHookScript.StopGrapple();
+            m_isGrappling = false;
         }
 
-        if (Input.GetKeyDown(grappleKey))
+        if (Input.GetKeyDown(m_GrappleKey))
         {
-            grapplingHookScript.StartGrapple();
-            isGrappling = true;
+            m_grapplingHookScript.StartGrapple();
+            m_isGrappling = true;
             
         }
-        if (Input.GetKeyUp(grappleKey))
+        if (Input.GetKeyUp(m_GrappleKey))
         {
-            grapplingHookScript.StopGrapple();
-            isGrappling = false;
+            m_grapplingHookScript.StopGrapple();
+            m_isGrappling = false;
         }
     }
 
@@ -90,52 +90,52 @@ public class PlayerAttacks : MonoBehaviour
         //scroll and hotbar logic
         if (Input.mouseScrollDelta.y < 0)
         {
-            itemSlot--;
+            m_itemSlot--;
         }
         else if (Input.mouseScrollDelta.y > 0)
         {
-            itemSlot++;
+            m_itemSlot++;
         }
 
-        if (Input.GetKeyDown(slot1Key))
+        if (Input.GetKeyDown(m_Slot1Key))
         {
-            itemSlot = 1;
+            m_itemSlot = 1;
         }
-        else if (Input.GetKeyDown(slot2Key))
+        else if (Input.GetKeyDown(m_Slot2Key))
         {
-            itemSlot = 2;
-        }
-
-        if(starCount <= 0)
-        {
-            itemSlot = 1;
+            m_itemSlot = 2;
         }
 
-        if (itemSlot > 2)
+        if(m_starCount <= 0)
         {
-            itemSlot = 1;
+            m_itemSlot = 1;
         }
-        else if (itemSlot < 1)
+
+        if (m_itemSlot > 2)
         {
-            itemSlot = 2;
+            m_itemSlot = 1;
+        }
+        else if (m_itemSlot < 1)
+        {
+            m_itemSlot = 2;
         }
 
         //item visualization logic
-        if (itemSlot == 1)
+        if (m_itemSlot == 1)
         {
-            katana.SetActive(true);
-            star.SetActive(false);
+            m_katana.SetActive(true);
+            m_star.SetActive(false);
         }
-        else if (itemSlot == 2)
+        else if (m_itemSlot == 2)
         {
-            katana.SetActive(false);
-            if (starCount > 0)
+            m_katana.SetActive(false);
+            if (m_starCount > 0)
             {
-                star.SetActive(true);
+                m_star.SetActive(true);
             }
             else
             {
-                star.SetActive(false);
+                m_star.SetActive(false);
             }
         }
     }

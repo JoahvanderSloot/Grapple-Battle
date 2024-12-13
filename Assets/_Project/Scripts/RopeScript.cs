@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class RopeScript : MonoBehaviour
 {
-    public bool isCut = false;
+    public bool m_IsCut = false;
 
     void Update()
     {
-        if (isCut)
+        if (m_IsCut)
         {
             Destroy(gameObject, 0.15f);
         }

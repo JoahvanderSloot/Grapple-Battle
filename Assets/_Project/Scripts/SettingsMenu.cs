@@ -4,46 +4,45 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public playerSettings playerSettings;
+    public playerSettings m_PlayerSettings;
 
     [Header("Sensitivity")]
-    [SerializeField] private Slider sensSlider;
-    [SerializeField] private TextMeshProUGUI sensText;
-    [SerializeField] private TMP_InputField sensInputField;
+    [SerializeField] Slider m_sensSlider;
+    [SerializeField] TextMeshProUGUI m_sensText;
+    [SerializeField] TMP_InputField m_sensInputField;
 
     private void Start()
     {
-        sensSlider.value = playerSettings.sens;
-        sensInputField.text = playerSettings.sens.ToString();
+        m_sensSlider.value = m_PlayerSettings.m_Sens;
+        m_sensInputField.text = m_PlayerSettings.m_Sens.ToString();
 
-        sensSlider.onValueChanged.AddListener(OnSliderValueChanged);
-        sensInputField.onEndEdit.AddListener(OnInputFieldValueChanged);
+        m_sensSlider.onValueChanged.AddListener(OnSliderValueChanged);
+        m_sensInputField.onEndEdit.AddListener(OnInputFieldValueChanged);
     }
 
-    private void OnSliderValueChanged(float value)
+    private void OnSliderValueChanged(float _value)
     {
-        int intValue = Mathf.Clamp(Mathf.RoundToInt(value), 10, 1000);
-        playerSettings.sens = intValue;
-        sensInputField.text = intValue.ToString();
-        sensText.text = intValue.ToString();
+        int _intValue = Mathf.Clamp(Mathf.RoundToInt(_value), 10, 1000);
+        m_PlayerSettings.m_Sens = _intValue;
+        m_sensInputField.text = _intValue.ToString();
+        m_sensText.text = _intValue.ToString();
     }
 
-    private void OnInputFieldValueChanged(string value)
+    private void OnInputFieldValueChanged(string _value)
     {
-        if (int.TryParse(value, out int inputValue))
+        if (int.TryParse(_value, out int _inputValue))
         {
-            inputValue = Mathf.Clamp(inputValue, 10, 1000);
+            _inputValue = Mathf.Clamp(_inputValue, 10, 1000);
 
-            playerSettings.sens = inputValue;
-            sensSlider.value = inputValue;
+            m_PlayerSettings.m_Sens = _inputValue;
+            m_sensSlider.value = _inputValue;
 
-            sensInputField.text = inputValue.ToString();
-            sensText.text = inputValue.ToString();
+            m_sensInputField.text = _inputValue.ToString();
+            m_sensText.text = _inputValue.ToString();
         }
         else
         {
-            sensInputField.text = playerSettings.sens.ToString();
+            m_sensInputField.text = m_PlayerSettings.m_Sens.ToString();
         }
     }
-
 }

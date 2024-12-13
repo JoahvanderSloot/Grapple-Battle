@@ -4,11 +4,11 @@ using UnityEngine.UI;
 public class UImanager : MonoBehaviour
 {
     [Header("In Gam eObjects")]
-    [SerializeField] GameObject player;
-    [SerializeField] GameObject grapplingGun;
+    [SerializeField] GameObject _player;
+    [SerializeField] GameObject _grapplingGun;
 
     [Header("UI Objects")]
-    [SerializeField] Image crossHair;
+    [SerializeField] Image _crossHair;
 
     void Update()
     {
@@ -17,14 +17,14 @@ public class UImanager : MonoBehaviour
 
     private void CrossHair()
     {
-        GrapplingHook grapplingHookScript = grapplingGun.GetComponent<GrapplingHook>();
-        if (grapplingHookScript.canGrapple)
+        GrapplingHook _grapplingHookScript = _grapplingGun.GetComponent<GrapplingHook>();
+        if (_grapplingHookScript.m_CanGrapple)
         {
-            crossHair.color = Color.green;
+            _crossHair.color = Color.green;
         }
         else
         {
-            crossHair.color = Color.black;
+            _crossHair.color = Color.black;
         }
     }
 }

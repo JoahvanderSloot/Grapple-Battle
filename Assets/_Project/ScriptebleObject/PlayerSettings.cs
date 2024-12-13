@@ -4,14 +4,14 @@ using UnityEngine;
 public class playerSettings : GenericScriptableSingleton<playerSettings>
 {
     [Header("Generic Settings")]
-    public float sens;
-    public bool audio;
+    public float m_Sens;
+    public bool m_Audio;
 
     [Header("Keybinds")]
-    public KeyCode jump;
-    public KeyCode crouch;
-    public KeyCode attack;
-    public KeyCode grapple;
-    public KeyCode slot1;
-    public KeyCode slot2;
+    public KeyCode m_Jump;
+    public KeyCode m_Crouch;
+    public KeyCode m_Attack;
+    public KeyCode m_Grapple;
+    public KeyCode m_Slot1;
+    public KeyCode m_Slot2;
 }

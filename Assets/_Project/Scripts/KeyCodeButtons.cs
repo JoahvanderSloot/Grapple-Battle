@@ -9,17 +9,17 @@ public class KeyCodeButtons : MonoBehaviour
 {
     public playerSettings playerSettings;
 
-    [SerializeField] string key;
-    bool waitForKeyInput = false;
-    [SerializeField] TextMeshProUGUI buttonText;
-    List<KeyCode> keyBinds;
+    [SerializeField] string m_key;
+    bool m_waitForKeyInput = false;
+    [SerializeField] TextMeshProUGUI m_buttonText;
+    List<KeyCode> m_keyBinds;
 
     private void Start()
     {
-        keyBinds = new List<KeyCode>();
+        m_keyBinds = new List<KeyCode>();
         UpdateButtonText();
 
-        keyBinds.AddRange(typeof(playerSettings).GetFields()
+        m_keyBinds.AddRange(typeof(playerSettings).GetFields()
             .Where(f => f.FieldType == typeof(KeyCode))
             .Select(f => (KeyCode)f.GetValue(playerSettings)));
     }
@@ -27,14 +27,14 @@ public class KeyCodeButtons : MonoBehaviour
 
     public void SetKeyCode()
     {
-        waitForKeyInput = true;
-        Image buttonColor = GetComponent<Image>();
-        buttonColor.color = Color.gray;
+        m_waitForKeyInput = true;
+        Image _buttonColor = GetComponent<Image>();
+        _buttonColor.color = Color.gray;
     }
 
     private void Update()
     {
-        if (waitForKeyInput)
+        if (m_waitForKeyInput)
         {
             DetectKeyPress();
         }
@@ -48,16 +48,16 @@ public class KeyCodeButtons : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
+            foreach (KeyCode _keyCode in System.Enum.GetValues(typeof(KeyCode)))
             {
-                if (Input.GetKeyDown(keyCode))
+                if (Input.GetKeyDown(_keyCode))
                 {
-                    if (!keyBinds.Contains(keyCode))
+                    if (!m_keyBinds.Contains(_keyCode))
                     {
                         Image buttonColor = GetComponent<Image>();
                         buttonColor.color = Color.white;
-                        SetKey(keyCode);
-                        waitForKeyInput = false;
+                        SetKey(_keyCode);
+                        m_waitForKeyInput = false;
                         UpdateButtonText();
                         break;
                     }
@@ -70,53 +70,53 @@ public class KeyCodeButtons : MonoBehaviour
         }
     }
 
-    private void SetKey(KeyCode newKey)
+    private void SetKey(KeyCode _newKey)
     {
-        switch (key)
+        switch (m_key)
         {
             case "jump":
-                playerSettings.jump = newKey;
+                playerSettings.m_Jump = _newKey;
                 break;
             case "crouch":
-                playerSettings.crouch = newKey;
+                playerSettings.m_Crouch = _newKey;
                 break;
             case "attack":
-                playerSettings.attack = newKey;
+                playerSettings.m_Attack = _newKey;
                 break;
             case "grapple":
-                playerSettings.grapple = newKey;
+                playerSettings.m_Grapple = _newKey;
                 break;
             case "slot1":
-                playerSettings.slot1 = newKey;
+                playerSettings.m_Slot1 = _newKey;
                 break;
             case "slot2":
-                playerSettings.slot2 = newKey;
+                playerSettings.m_Slot2 = _newKey;
                 break;
         }
     }
 
     private void UpdateButtonText()
     {
-        KeyCode currentKey = GetCurrentKey();
-        buttonText.text = key + "\n" + currentKey.ToString();
+        KeyCode _currentKey = GetCurrentKey();
+        m_buttonText.text = m_key + "\n" + _currentKey.ToString();
     }
 
     private KeyCode GetCurrentKey()
     {
-        switch (key)
+        switch (m_key)
         {
             case "jump":
-                return playerSettings.jump;
+                return playerSettings.m_Jump;
             case "crouch":
-                return playerSettings.crouch;
+                return playerSettings.m_Crouch;
             case "attack":
-                return playerSettings.attack;
+                return playerSettings.m_Attack;
             case "grapple":
-                return playerSettings.grapple;
+                return playerSettings.m_Grapple;
             case "slot1":
-                return playerSettings.slot1;
+                return playerSettings.m_Slot1;
             case "slot2":
-                return playerSettings.slot2;
+                return playerSettings.m_Slot2;
             default:
                 return KeyCode.None;
         }
