@@ -239,9 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed6b56853e0f8c46b1b662f897b6a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 210901506}
-  grapplingGun: {fileID: 1518350583}
-  crossHair: {fileID: 1035602780}
+  m_player: {fileID: 210901506}
+  m_grapplingGun: {fileID: 1518350583}
+  m_crossHair: {fileID: 1035602780}
 --- !u!1 &84401759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,19 +1287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4ecb1dabddb5946a6cb8bdd7c4bbf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1389005623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210901506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fda272f2d683374295ae71fcb4b16f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 20
 --- !u!1 &1475398843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,8 +1617,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3071fa77c66648be24fc405459169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
-  kbDirection: {x: 0, y: 0, z: 0}
+  m_HP: 10
+  m_KbDirection: {x: 0, y: 0, z: 0}
 --- !u!54 &1515919482
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1836,9 +1823,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
+      propertyPath: m_reach
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
       propertyPath: kbStrength
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_raySpawn
+      value: 
+      objectReference: {fileID: 745253704842426060}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_kbStrength
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_katanaCollider
+      value: 
+      objectReference: {fileID: 745253704842426061}
     - target: {fileID: 2166143768858054777, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: field of view
@@ -1872,6 +1879,11 @@ PrefabInstance:
       objectReference: {fileID: 260778081}
     - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
+      propertyPath: m_Orientation
+      value: 
+      objectReference: {fileID: 260778081}
+    - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 1389005620}
@@ -1882,8 +1894,33 @@ PrefabInstance:
       objectReference: {fileID: 728245876}
     - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 745253704842426060}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_GunTip
+      value: 
+      objectReference: {fileID: 745253704842426062}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_Player
+      value: 
+      objectReference: {fileID: 728245876}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
       propertyPath: maxDistance
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_maxDistance
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790585193736588215, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_WhatIsGround.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 8180222546406216320, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
@@ -1895,11 +1932,34 @@ PrefabInstance:
       propertyPath: cameraPosition
       value: 
       objectReference: {fileID: 1797568521}
+    - target: {fileID: 9089587882318955091, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_CameraPosition
+      value: 
+      objectReference: {fileID: 1797568521}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe2c505add56433419ed8a6a33ce55ff, type: 3}
+--- !u!4 &745253704842426060 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1867582639919150704, guid: fe2c505add56433419ed8a6a33ce55ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 745253704842426059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &745253704842426061 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 4223005932528590188, guid: fe2c505add56433419ed8a6a33ce55ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 745253704842426059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &745253704842426062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8678657742566274678, guid: fe2c505add56433419ed8a6a33ce55ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 745253704842426059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2049253715459473915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1910,33 +1970,53 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: star
+      propertyPath: m_star
       value: 
       objectReference: {fileID: 575315250}
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: katana
+      propertyPath: m_katana
       value: 
       objectReference: {fileID: 104483392}
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: playerCam
+      propertyPath: m_Slot1Key
+      value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_Slot2Key
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_starPref
+      value: 
+      objectReference: {fileID: 5713108995022850134, guid: 74a5e13769b65da4683b656b696d1834,
+        type: 3}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_AttackKey
+      value: 323
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_playerCam
       value: 
       objectReference: {fileID: 484807160}
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: grapplingHook
-      value: 
-      objectReference: {fileID: 711400910139721061, guid: b7a105a3b8a47984c9db3304bde5f337,
-        type: 3}
-    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
-        type: 3}
-      propertyPath: attackCooldown
-      value: 0.25
+      propertyPath: m_GrappleKey
+      value: 324
       objectReference: {fileID: 0}
     - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: grapplingHookScript
+      propertyPath: m_orientation
+      value: 
+      objectReference: {fileID: 260778081}
+    - target: {fileID: 2644770736310830791, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_grapplingHookScript
       value: 
       objectReference: {fileID: 893408750}
     - target: {fileID: 2912164085041322593, guid: 55df398c1337dd14ea2bff032f69a017,
@@ -1994,50 +2074,72 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3108251737661536531, guid: 55df398c1337dd14ea2bff032f69a017,
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: m_TagString
-      value: Player
+      propertyPath: m_JumpKey
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: playerCam
+      propertyPath: m_JumpForce
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_MoveSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_playerCam
       value: 
       objectReference: {fileID: 484807162}
     - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: wallJumpForce
+      propertyPath: m_GroundDrag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_Orientation
+      value: 
+      objectReference: {fileID: 260778081}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_JumpCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_AirMultiplier
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
+        type: 3}
+      propertyPath: m_WallJumpForce
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 7405741147613856124, guid: 55df398c1337dd14ea2bff032f69a017,
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: m_Mass
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
+      propertyPath: m_playerCollider
+      value: 
+      objectReference: {fileID: 2049253715459473916}
+    - target: {fileID: 6537015091378038643, guid: 55df398c1337dd14ea2bff032f69a017,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8379416654023031996, guid: 55df398c1337dd14ea2bff032f69a017,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      propertyPath: m_WhatIsGround.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3108251737661536531, guid: 55df398c1337dd14ea2bff032f69a017,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1389005623}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55df398c1337dd14ea2bff032f69a017, type: 3}
+--- !u!136 &2049253715459473916 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 7831556725828690650, guid: 55df398c1337dd14ea2bff032f69a017,
+    type: 3}
+  m_PrefabInstance: {fileID: 2049253715459473915}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

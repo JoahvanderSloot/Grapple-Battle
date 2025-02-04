@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HitPoints : MonoBehaviour
 {
-    public int HP = 10;
+    public int m_HP = 10;
 
     private void Update()
     {
@@ -11,7 +11,7 @@ public class HitPoints : MonoBehaviour
 
     protected void DestroyOnKill()
     {
-        if (HP <= 0)
+        if (m_HP <= 0)
         {
             Destroy(gameObject);
         }

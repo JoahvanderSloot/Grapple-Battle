@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Knockback : HitPoints
 {
-    private int oldHitPoints;
-    public Vector3 kbDirection;
+    int m_oldHitPoints;
+    public Vector3 m_KbDirection;
 
     private void Update()
     {
         DestroyOnKill();
     }
 
-    public void AddKnockback(float knockBackStrength)
+    public void AddKnockback(float _knockBackStrength)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        rb.AddForce(kbDirection * knockBackStrength, ForceMode.Impulse);
+        rb.AddForce(m_KbDirection * _knockBackStrength, ForceMode.Impulse);
     }
 }

@@ -2,40 +2,40 @@ using UnityEngine;
 
 public class KatanaScript : MonoBehaviour
 {
-    Animator animator;
-    [SerializeField] Transform raySpawn;
-    [SerializeField] float reach;
-    [SerializeField] Collider katanaCollider;
-    [SerializeField] float kbStrength;
+    Animator m_animator;
+    [SerializeField] Transform m_raySpawn;
+    [SerializeField] float m_reach;
+    [SerializeField] Collider m_katanaCollider;
+    [SerializeField] float m_kbStrength;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        m_animator = GetComponent<Animator>();
     }
 
     public void Attack()
     {
-        animator.SetTrigger("Attack");
+        m_animator.SetTrigger("Attack");
 
         //check if you hit anything with a raycast and run different command in different objects you hit
-        RaycastHit hitInfo;
-        bool hit = Physics.Raycast(raySpawn.position, raySpawn.forward, out hitInfo, reach);
+        RaycastHit _hitInfo;
+        bool hit = Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out _hitInfo, m_reach);
 
         if (hit)
         {
-            Knockback knockbackScript = hitInfo.collider.GetComponent<Knockback>();
-            if (knockbackScript != null)
+            Knockback _knockbackScript = _hitInfo.collider.GetComponent<Knockback>();
+            if (_knockbackScript != null)
             {
-                knockbackScript.AddKnockback(kbStrength);
-                knockbackScript.kbDirection = raySpawn.forward;
-                knockbackScript.HP--;
+                _knockbackScript.AddKnockback(m_kbStrength);
+                _knockbackScript.m_KbDirection = m_raySpawn.forward;
+                _knockbackScript.m_HP--;
             }
             else
             {
-                HitPoints hpScript = hitInfo.collider.GetComponent<HitPoints>();
-                if (hpScript != null)
+                HitPoints _hpScript = _hitInfo.collider.GetComponent<HitPoints>();
+                if (_hpScript != null)
                 {
-                    hpScript.HP--;
+                    _hpScript.m_HP--;
                 }
                 else
                 {
@@ -49,6 +49,6 @@ public class KatanaScript : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(raySpawn.position, raySpawn.position + raySpawn.forward * reach);
+        Gizmos.DrawLine(m_raySpawn.position, m_raySpawn.position + m_raySpawn.forward * m_reach);
     }
 }

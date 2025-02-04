@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 7405741147613856124}
   - component: {fileID: 6537015091378038643}
   - component: {fileID: 2644770736310830791}
+  - component: {fileID: 2167722893862910581}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -214,19 +215,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4ecb1dabddb5946a6cb8bdd7c4bbf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
-  groundDrag: 5
-  jumpForce: 8.5
-  jumpCooldown: 0.25
-  airMultiplier: 0.4
-  walkSpeed: 0
-  sprintSpeed: 0
-  jumpKey: 32
-  whatIsGround:
+  m_MoveSpeed: 7
+  m_GroundDrag: 5
+  m_JumpForce: 8.5
+  m_JumpCooldown: 0.25
+  m_AirMultiplier: 0.4
+  m_WallJumpForce: 6
+  m_WalkSpeed: 0
+  m_SprintSpeed: 0
+  m_JumpKey: 32
+  m_CrouchKey: 0
+  m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1024
-  orientation: {fileID: 4244211781072309332}
-  playerCollider: {fileID: 7831556725828690650}
+  m_Orientation: {fileID: 4244211781072309332}
+  m_playerCollider: {fileID: 7831556725828690650}
+  m_playerCam: {fileID: 0}
 --- !u!114 &2644770736310830791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,22 +243,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d87fe71abaae3664db3f459ccad0c561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackKey: 323
-  grappleKey: 324
-  Slot1: 49
-  Slot2: 50
-  katana: {fileID: 0}
-  star: {fileID: 0}
-  itemSlot: 1
-  orientation: {fileID: 4244211781072309332}
-  grapplingHook: {fileID: 711400910139721061, guid: b7a105a3b8a47984c9db3304bde5f337,
+  m_AttackKey: 323
+  m_GrappleKey: 324
+  m_Slot1Key: 49
+  m_Slot2Key: 50
+  m_katana: {fileID: 0}
+  m_star: {fileID: 0}
+  m_itemSlot: 1
+  m_orientation: {fileID: 4244211781072309332}
+  m_starPref: {fileID: 5713108995022850134, guid: 74a5e13769b65da4683b656b696d1834,
     type: 3}
-  starPref: {fileID: 5713108995022850134, guid: 74a5e13769b65da4683b656b696d1834,
-    type: 3}
-  starCount: 10
-  playerCam: {fileID: 0}
-  grapplingHookScript: {fileID: 0}
-  attackCooldown: 0.5
+  m_starCount: 10
+  m_playerCam: {fileID: 0}
+  m_grapplingHookScript: {fileID: 0}
+  m_attackCooldown: 0.25
+--- !u!114 &2167722893862910581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3108251737661536531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fda272f2d683374295ae71fcb4b16f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HP: 20
 --- !u!1 &8808510303045680121
 GameObject:
   m_ObjectHideFlags: 0

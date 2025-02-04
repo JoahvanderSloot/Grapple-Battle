@@ -3,43 +3,43 @@ using UnityEngine;
 public class NinjaStar : MonoBehaviour
 {
     [Header("Shooting")]
-    Rigidbody rb;
-    [SerializeField] float shootSpeed;
-    [SerializeField] float kbStrength;
+    Rigidbody m_rb;
+    [SerializeField] float m_shootSpeed;
+    [SerializeField] float m_kbStrength;
 
-    GameObject playerCam;
-    Vector3 moveDirection;
-    bool canDestroy = false;
+    GameObject m_playerCam;
+    Vector3 m_moveDirection;
+    bool m_canDestroy = false;
 
     void Start()
     {
-        playerCam = GameObject.FindWithTag("PlayerCam");
+        m_playerCam = GameObject.FindWithTag("PlayerCam");
 
-        moveDirection = playerCam.transform.forward;
+        m_moveDirection = m_playerCam.transform.forward;
 
-        rb = GetComponent<Rigidbody>();
-        rb.AddForce(moveDirection.normalized * shootSpeed * 10f, ForceMode.Force);
+        m_rb = GetComponent<Rigidbody>();
+        m_rb.AddForce(m_moveDirection.normalized * m_shootSpeed * 10f, ForceMode.Force);
 
         Destroy(gameObject, 4);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (canDestroy)
+        if (m_canDestroy)
         {
-            Knockback knockbackScript = other.GetComponent<Knockback>();
-            if (knockbackScript != null)
+            Knockback _knockbackScript = other.GetComponent<Knockback>();
+            if (_knockbackScript != null)
             {
-                knockbackScript.AddKnockback(kbStrength);
-                knockbackScript.kbDirection = rb.velocity.normalized;
-                knockbackScript.HP--;
+                _knockbackScript.AddKnockback(m_kbStrength);
+                _knockbackScript.m_KbDirection = m_rb.velocity.normalized;
+                _knockbackScript.m_HP--;
             }
             else
             {
-                HitPoints hpScript = other.GetComponent<HitPoints>();
-                if (hpScript != null)
+                HitPoints _hpScript = other.GetComponent<HitPoints>();
+                if (_hpScript != null)
                 {
-                    hpScript.HP--;
+                    _hpScript.m_HP--;
                 }
                 else
                 {
@@ -54,6 +54,6 @@ public class NinjaStar : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        canDestroy = true;
+        m_canDestroy = true;
     }
 }
