@@ -135,9 +135,8 @@ GameObject:
   - component: {fileID: 116410689}
   - component: {fileID: 116410688}
   - component: {fileID: 116410687}
-  - component: {fileID: 116410690}
   m_Layer: 5
-  m_Name: Jump
+  m_Name: jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,10 +206,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 116410690}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -257,28 +256,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116410685}
   m_CullTransparentMesh: 1
---- !u!114 &116410690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116410685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: jump
-  buttonText: {fileID: 1197398901}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &140208421
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,9 +529,8 @@ GameObject:
   - component: {fileID: 614022620}
   - component: {fileID: 614022619}
   - component: {fileID: 614022618}
-  - component: {fileID: 614022621}
   m_Layer: 5
-  m_Name: Slot2
+  m_Name: slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -624,14 +600,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614022621}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -674,28 +650,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614022616}
   m_CullTransparentMesh: 1
---- !u!114 &614022621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614022616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: slot2
-  buttonText: {fileID: 1023059181}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &711104055
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,9 +662,8 @@ GameObject:
   - component: {fileID: 711104059}
   - component: {fileID: 711104058}
   - component: {fileID: 711104057}
-  - component: {fileID: 711104060}
   m_Layer: 5
-  m_Name: Slot1
+  m_Name: slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,14 +733,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711104060}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -830,28 +783,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711104055}
   m_CullTransparentMesh: 1
---- !u!114 &711104060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711104055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: slot1
-  buttonText: {fileID: 1228334493}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &730177280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,9 +1110,8 @@ GameObject:
   - component: {fileID: 785129511}
   - component: {fileID: 785129510}
   - component: {fileID: 785129509}
-  - component: {fileID: 785129512}
   m_Layer: 5
-  m_Name: Grapple
+  m_Name: grapple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1251,14 +1181,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 785129512}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1301,28 +1231,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785129507}
   m_CullTransparentMesh: 1
---- !u!114 &785129512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785129507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: grapple
-  buttonText: {fileID: 1129751150}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &872626551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952799952}
   - component: {fileID: 952799953}
+  - component: {fileID: 952799954}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -1637,6 +1546,26 @@ MonoBehaviour:
   m_sensSlider: {fileID: 891205618}
   m_sensText: {fileID: 1870471143}
   m_sensInputField: {fileID: 872626553}
+--- !u!114 &952799954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952799951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
+  m_allButtons:
+  - {fileID: 116410687}
+  - {fileID: 1475643685}
+  - {fileID: 1850074434}
+  - {fileID: 785129509}
+  - {fileID: 711104057}
+  - {fileID: 614022618}
 --- !u!1 &1023059179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2530,9 +2459,8 @@ GameObject:
   - component: {fileID: 1475643687}
   - component: {fileID: 1475643686}
   - component: {fileID: 1475643685}
-  - component: {fileID: 1475643688}
   m_Layer: 5
-  m_Name: Crouch
+  m_Name: crouch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2602,14 +2530,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1475643688}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2652,28 +2580,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475643683}
   m_CullTransparentMesh: 1
---- !u!114 &1475643688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475643683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: crouch
-  buttonText: {fileID: 418807592}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &1619568152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3133,9 +3039,8 @@ GameObject:
   - component: {fileID: 1850074436}
   - component: {fileID: 1850074435}
   - component: {fileID: 1850074434}
-  - component: {fileID: 1850074437}
   m_Layer: 5
-  m_Name: Attack
+  m_Name: attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3205,14 +3110,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1850074437}
+      - m_Target: {fileID: 952799954}
         m_TargetAssemblyTypeName: KeyCodeButtons, Assembly-CSharp
         m_MethodName: SetKeyCode
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3255,28 +3160,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850074432}
   m_CullTransparentMesh: 1
---- !u!114 &1850074437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850074432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d763af19ad95040b9bb94dac4cf469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSettings: {fileID: 11400000, guid: f5c5d40da7750a4419926165dc7f63a7, type: 2}
-  key: attack
-  buttonText: {fileID: 1344803422}
-  allButtons:
-  - {fileID: 1850074434}
-  - {fileID: 1475643685}
-  - {fileID: 785129509}
-  - {fileID: 116410687}
-  - {fileID: 711104057}
-  - {fileID: 614022618}
 --- !u!1 &1870471140
 GameObject:
   m_ObjectHideFlags: 0

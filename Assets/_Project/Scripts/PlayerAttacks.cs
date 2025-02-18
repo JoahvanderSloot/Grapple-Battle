@@ -70,11 +70,11 @@ public class PlayerAttacks : MonoBehaviour
             m_isGrappling = false;
         }
 
-        if (Input.GetKeyDown(m_GrappleKey))
+        if (Input.GetKeyDown(m_GrappleKey) && m_grapplingHookScript.m_CanGrapple)
         {
             m_grapplingHookScript.StartGrapple();
             m_isGrappling = true;
-            
+
         }
         if (Input.GetKeyUp(m_GrappleKey))
         {
