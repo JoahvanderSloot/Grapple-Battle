@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 7405741147613856124}
   - component: {fileID: 6537015091378038643}
   - component: {fileID: 2644770736310830791}
-  - component: {fileID: 2167722893862910581}
+  - component: {fileID: 9122404631910276906}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_playerCam: {fileID: 0}
   m_grapplingHookScript: {fileID: 0}
   m_attackCooldown: 0.25
---- !u!114 &2167722893862910581
+--- !u!114 &9122404631910276906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -266,10 +266,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3108251737661536531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fda272f2d683374295ae71fcb4b16f7, type: 3}
+  m_Script: {fileID: 11500000, guid: cbc3071fa77c66648be24fc405459169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HP: 20
+  m_KbDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &8808510303045680121
 GameObject:
   m_ObjectHideFlags: 0

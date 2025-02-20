@@ -36,8 +36,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] PlayerCam m_playerCam;
     bool m_isCrouching;
 
+    [Header("Other")]
+    HitPoints m_hitPoints;
+
     private void Start()
     {
+        m_hitPoints = GetComponent<HitPoints>();
         m_JumpKey = playerSettings.Instance.jump;
         m_CrouchKey = playerSettings.Instance.crouch;
 
@@ -58,10 +62,17 @@ public class PlayerMovement : MonoBehaviour
         // handle drag
         m_rb.drag = m_grounded ? m_GroundDrag : 0;
 
-        // Reset position if player falls
+        // Kill player in void
         if (transform.position.y <= -10)
-        {
-            transform.position = new Vector3(0, 0, 0);
+        {;
+            float _decrementRate = 200;
+            m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
+
+            if (m_hitPoints.m_HP < 5)
+            {
+                transform.position = new Vector3(0, 0, 0);
+                m_hitPoints.m_HP = 20;
+            }
         }
 
         // Adjust mass based on crouching in the air

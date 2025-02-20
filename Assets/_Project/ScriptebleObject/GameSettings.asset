@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   m_GameTimer: 0
-  m_GameTime: 10
+  m_GameTime: 703
   m_OutCome: 0

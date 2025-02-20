@@ -18,7 +18,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] Transform m_orientation;
 
     [SerializeField] GameObject m_starPref;
-    [SerializeField] int m_starCount = 10;
+    public int m_StarCount = 10;
 
     [SerializeField] GameObject m_playerCam;
 
@@ -52,10 +52,10 @@ public class PlayerAttacks : MonoBehaviour
                 KatanaScript _katanaScript = m_katana.GetComponent<KatanaScript>();
                 _katanaScript.Attack();
             }
-            else if (m_itemSlot == 2 && m_starCount >= 1)
+            else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
                 Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
-                m_starCount--;
+                m_StarCount--;
             }
         }
 
@@ -103,7 +103,7 @@ public class PlayerAttacks : MonoBehaviour
             m_itemSlot = 2;
         }
 
-        if(m_starCount <= 0)
+        if(m_StarCount <= 0)
         {
             m_itemSlot = 1;
         }
@@ -125,7 +125,7 @@ public class PlayerAttacks : MonoBehaviour
         else if (m_itemSlot == 2)
         {
             m_katana.SetActive(false);
-            if (m_starCount > 0)
+            if (m_StarCount > 0)
             {
                 m_star.SetActive(true);
             }

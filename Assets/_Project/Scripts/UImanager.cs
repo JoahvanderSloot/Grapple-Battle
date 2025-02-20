@@ -12,11 +12,16 @@ public class UImanager : MonoBehaviour
     [Header("UI Objects")]
     [SerializeField] Image m_crossHair;
     [SerializeField] TextMeshProUGUI m_gameTimerText;
+    [SerializeField] TextMeshProUGUI m_playerHP;
+    [SerializeField] TextMeshProUGUI m_starCount;
 
     void Update()
     {
         CrossHair();
         m_gameTimerText.text = m_gameManager.m_GameSettings.m_GameTimer.ToString();
+
+        m_playerHP.text = "HP " + m_player.GetComponent<Knockback>().m_HP.ToString();
+        m_starCount.text = "Star Count " + m_player.GetComponent<PlayerAttacks>().m_StarCount.ToString();
     }
 
     private void CrossHair()

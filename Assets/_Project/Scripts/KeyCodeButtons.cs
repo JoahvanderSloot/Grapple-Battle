@@ -44,18 +44,15 @@ public class KeyCodeButtons : MonoBehaviour
 
     private void Update()
     {
-        if (m_waitForKeyInput)
+        if (m_waitForKeyInput && !m_keyIsBeingUsed.activeSelf)
         {
             DetectKeyPress();
         }
-    }
 
-    private void FixedUpdate()
-    {
-        if (!m_keyIsBeingUsed.activeSelf)
+        if (m_keyIsBeingUsed.activeSelf)
         {
-            m_textTimer++;
-            if(m_textTimer >= 2)
+            m_textTimer += Time.deltaTime * 2;
+            if (m_textTimer >= 2)
             {
                 m_keyIsBeingUsed.SetActive(false);
                 m_textTimer = 0;
