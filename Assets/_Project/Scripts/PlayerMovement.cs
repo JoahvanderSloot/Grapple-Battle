@@ -123,6 +123,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (m_rb == null) return;
+
         // Calculate movement direction
         m_moveDirection = m_Orientation.forward * m_verticalInput + m_Orientation.right * m_horizontalInput;
 
@@ -132,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         else
             m_rb.AddForce(m_moveDirection.normalized * m_MoveSpeed * 10f * m_AirMultiplier, ForceMode.Force);
     }
+
 
     private void SpeedControl()
     {

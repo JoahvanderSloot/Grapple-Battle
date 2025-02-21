@@ -16,18 +16,30 @@ public class MenuButtons : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("MainScene");
-        Time.timeScale = 1f;
     }
 
     public void MainMenu()
     {
         SceneManager.LoadScene("StartMenu");
-        Time.timeScale = 1f;
     }
 
     public void Settings()
     {
         SceneManager.LoadScene("Settings");
+    }
+
+    public void ContinueGame()
+    {
+        GameManager _gameManager = FindFirstObjectByType<GameManager>();
+        if (_gameManager != null)
+        {
+            _gameManager.m_Paused = false;
+        }
+        else
+        {
+            Debug.Log("FKJDSKLFJKLJFD");
+        }
+        Debug.Log(_gameManager.m_Paused);
     }
 
     public void QuitGame()

@@ -19,9 +19,6 @@ public class PlayerCam : MonoBehaviour
         m_SensX = playerSettings.Instance.sens;
         m_SensY = playerSettings.Instance.sens;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
         m_cam = GetComponent<Camera>();
     }
 
