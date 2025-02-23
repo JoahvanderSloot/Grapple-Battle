@@ -10,12 +10,16 @@ public class GenericScriptableSingleton<T> : ScriptableObject where T : Scriptab
         {
             if (m_instance == null)
             {
-                // Find an existing instance in the project (optional)
-                m_instance = Resources.FindObjectsOfTypeAll<T>()[0];
+                // Try to find an existing instance in the project
+                T[] instances = Resources.FindObjectsOfTypeAll<T>();
 
-                // If not found, create a new instance
-                if (m_instance == null)
+                if (instances != null && instances.Length > 0)
                 {
+                    m_instance = instances[0];
+                }
+                else
+                {
+                    // If not found, create a new instance
                     m_instance = CreateInstance<T>();
                 }
             }

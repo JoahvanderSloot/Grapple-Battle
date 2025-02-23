@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4243540384901052868}
   - component: {fileID: 958086852143887969}
   - component: {fileID: 3075740445378265771}
+  - component: {fileID: -4147379763585714884}
   m_Layer: 10
   m_Name: Tile_Road_End_Edge
   m_TagString: Untagged
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-4147379763585714884
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3580297741676143486}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.000001, y: 2, z: 2.3000007}
+  m_Center: {x: -0.000000059604645, y: 0, z: 0.14999998}
