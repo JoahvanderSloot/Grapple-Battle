@@ -8,6 +8,9 @@ public class GameOverUI : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         switch (m_gameSettings.m_OutCome)
         {
             case 0:
