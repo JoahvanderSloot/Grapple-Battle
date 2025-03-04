@@ -28,18 +28,13 @@ public class MenuButtons : MonoBehaviour
         SceneManager.LoadScene("Settings");
     }
 
-    public void ContinueGame()
+    public void Forfeit()
     {
-        GameManager _gameManager = FindFirstObjectByType<GameManager>();
-        if (_gameManager != null)
+        HitPoints _playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<HitPoints>();
+        if (_playerHP != null)
         {
-            _gameManager.m_Paused = false;
+            _playerHP.m_HP = 0;
         }
-        else
-        {
-            Debug.Log("FKJDSKLFJKLJFD");
-        }
-        Debug.Log(_gameManager.m_Paused);
     }
 
     public void QuitGame()

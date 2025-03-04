@@ -143,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &13895105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4351,7 +4351,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 995271368}
         m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: MainMenu
+        m_MethodName: Forfeit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6457,6 +6457,8 @@ MonoBehaviour:
   m_GameSettings: {fileID: 11400000, guid: d7483bcdfa06e69428e63ea8bb4b3edd, type: 2}
   m_Paused: 0
   m_canvas: {fileID: 13895107}
+  m_players: []
+  m_GameStart: 0
 --- !u!1001 &1853606966
 PrefabInstance:
   m_ObjectHideFlags: 0

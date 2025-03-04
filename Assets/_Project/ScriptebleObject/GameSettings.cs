@@ -5,8 +5,7 @@ public class GameSettings : ScriptableObject
 {
     public int m_GameTimer;
     public int m_GameTime;
-    //0 = draw, 1 = win, 2 = lose
-    public int m_OutCome;
+    public int m_OutCome; // 0 = draw, 1 = win, 2 = lose
     public bool m_Audio;
     public bool m_Music;
 }
