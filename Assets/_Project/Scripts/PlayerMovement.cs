@@ -88,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
         m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
     }
 
+    private void OnApplicationFocus(bool focus)
+    {
+        //when focus is true you can move when focus is false you cant
+    }
+
     private void FixedUpdate()
     {
         MovePlayer();

@@ -12,7 +12,7 @@ public class Knockback : HitPoints
 
     public void AddKnockback(float _knockBackStrength)
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.AddForce(m_KbDirection * _knockBackStrength, ForceMode.Impulse);
+        Rigidbody _rb = GetComponent<Rigidbody>();
+        _rb.AddForce(m_KbDirection * _knockBackStrength, ForceMode.Impulse);
     }
 }

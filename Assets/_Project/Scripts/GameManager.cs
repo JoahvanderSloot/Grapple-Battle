@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] List<GameObject> m_players;
     public bool m_GameStart;
+
+    [SerializeField] TextMeshProUGUI m_playercount;
 
     private void Awake()
     {
@@ -45,6 +48,8 @@ public class GameManager : MonoBehaviour
         {
             m_Paused = !m_Paused;
         }
+
+        m_playercount.text = m_players.Count.ToString();
     }
 
     private IEnumerator CheckForPlayers()
