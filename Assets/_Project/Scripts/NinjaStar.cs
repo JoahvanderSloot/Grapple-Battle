@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class NinjaStar : MonoBehaviour
@@ -7,9 +8,11 @@ public class NinjaStar : MonoBehaviour
     [SerializeField] float m_shootSpeed;
     [SerializeField] float m_kbStrength;
 
+    [Header("Other")]
     GameObject m_playerCam;
     Vector3 m_moveDirection;
     bool m_canDestroy = false;
+    public GameObject m_player;
 
     void Start()
     {
@@ -27,12 +30,10 @@ public class NinjaStar : MonoBehaviour
     {
         if (m_canDestroy)
         {
-            Knockback _knockbackScript = other.GetComponent<Knockback>();
-            if (_knockbackScript != null)
+            if (other.gameObject.CompareTag("PlayerBody"))
             {
-                _knockbackScript.AddKnockback(m_kbStrength);
-                _knockbackScript.m_KbDirection = m_rb.velocity.normalized;
-                _knockbackScript.m_HP--;
+                Knockback _knockbackScript = m_player.GetComponent<Knockback>();
+                _knockbackScript.m_view.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_moveDirection, 1);
             }
             else
             {

@@ -55,7 +55,9 @@ public class PlayerAttacks : MonoBehaviour
             }
             else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
-                Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
+                GameObject _star = Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
+                NinjaStar _starScript = _star.GetComponent<NinjaStar>();
+                _starScript.m_player = gameObject;
                 m_StarCount--;
             }
         }

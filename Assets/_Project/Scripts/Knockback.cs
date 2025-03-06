@@ -1,18 +1,27 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class Knockback : HitPoints
 {
     int m_oldHitPoints;
-    public Vector3 m_KbDirection;
+    Rigidbody m_rigidbody;
+
+    private void Start()
+    {
+        m_view = GetComponent<PhotonView>();
+    }
 
     private void Update()
     {
+        m_rigidbody = GetComponent<Rigidbody>();
         DestroyOnKill();
     }
 
-    public void AddKnockback(float _knockBackStrength)
+    [PunRPC]
+    public void DamageOtherPlayer(float _knockBackStrength, Vector3 _direction, int _damage)
     {
-        Rigidbody _rb = GetComponent<Rigidbody>();
-        _rb.AddForce(m_KbDirection * _knockBackStrength, ForceMode.Impulse);
+        m_HP -= _damage;
+        m_rigidbody.AddForce(_direction * _knockBackStrength, ForceMode.Impulse);
     }
 }
+    

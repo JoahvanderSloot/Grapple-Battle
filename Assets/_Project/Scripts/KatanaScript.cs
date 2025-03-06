@@ -1,12 +1,13 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class KatanaScript : MonoBehaviour
 {
     Animator m_animator;
     [SerializeField] Transform m_raySpawn;
     [SerializeField] float m_reach;
-    [SerializeField] Collider m_katanaCollider;
     [SerializeField] float m_kbStrength;
+    [SerializeField] Knockback m_knockbackScript;
 
     void Start()
     {
@@ -19,16 +20,13 @@ public class KatanaScript : MonoBehaviour
 
         //check if you hit anything with a raycast and run different command in different objects you hit
         RaycastHit _hitInfo;
-        bool hit = Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out _hitInfo, m_reach);
+        bool _hit = Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out _hitInfo, m_reach);
 
-        if (hit)
+        if (_hit)
         {
-            Knockback _knockbackScript = _hitInfo.collider.GetComponent<Knockback>();
-            if (_knockbackScript != null)
+            if (_hitInfo.collider.gameObject.CompareTag("PlayerBody"))
             {
-                _knockbackScript.AddKnockback(m_kbStrength);
-                _knockbackScript.m_KbDirection = m_raySpawn.forward;
-                _knockbackScript.m_HP--;
+                m_knockbackScript.m_view.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_raySpawn.forward, 2);
             }
             else
             {

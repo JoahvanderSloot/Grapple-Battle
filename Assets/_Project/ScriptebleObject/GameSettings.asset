@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   m_GameTimer: 0
-  m_GameTime: 65
+  m_GameTime: 661
   m_OutCome: 0
   m_Audio: 0
   m_Music: 0

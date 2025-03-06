@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<GameObject> m_players;
     public bool m_GameStart;
 
-    [SerializeField] TextMeshProUGUI m_playercount;
-
     private void Awake()
     {
         m_GameStart = false;
@@ -48,8 +46,6 @@ public class GameManager : MonoBehaviour
         {
             m_Paused = !m_Paused;
         }
-
-        m_playercount.text = m_players.Count.ToString();
     }
 
     private IEnumerator CheckForPlayers()

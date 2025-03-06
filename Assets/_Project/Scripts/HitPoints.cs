@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class HitPoints : MonoBehaviour
 {
     public int m_HP = 10;
-    PhotonView m_view;
+    public PhotonView m_view;
     GameManager m_gameManager;
 
     private void Start()

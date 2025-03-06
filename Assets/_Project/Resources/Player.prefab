@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7831556725828690650}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: PlayerBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,8 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3071fa77c66648be24fc405459169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 20
-  m_KbDirection: {x: 0, y: 0, z: 0}
+  m_HP: 1000
+  m_view: {fileID: 0}
 --- !u!114 &7371290892503749696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +421,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
+      propertyPath: m_view
+      value: 
+      objectReference: {fileID: 7371290892503749696}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
       propertyPath: m_reach
       value: 3
       objectReference: {fileID: 0}
@@ -432,13 +437,18 @@ PrefabInstance:
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_kbStrength
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_katanaCollider
       value: 
-      objectReference: {fileID: 8614945617823255236}
+      objectReference: {fileID: 0}
+    - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_knockbackScript
+      value: 
+      objectReference: {fileID: 9122404631910276906}
     - target: {fileID: 4501504990402312439, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_Orientation
@@ -469,6 +479,16 @@ PrefabInstance:
       propertyPath: m_WhatIsGround.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 6166272128516588350, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166272128516588350, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 8180222546406216320, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_Name
@@ -484,7 +504,8 @@ PrefabInstance:
       propertyPath: m_CameraPosition
       value: 
       objectReference: {fileID: 8379416654023031996}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4223005932528590188, guid: fe2c505add56433419ed8a6a33ce55ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -549,9 +570,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9158996d2bd1ca43b56f5e778d174a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &8614945617823255236 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 4223005932528590188, guid: fe2c505add56433419ed8a6a33ce55ff,
-    type: 3}
-  m_PrefabInstance: {fileID: 5554432440771155880}
-  m_PrefabAsset: {fileID: 0}
