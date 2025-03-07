@@ -18,7 +18,6 @@ public class KatanaScript : MonoBehaviour
     {
         m_animator.SetTrigger("Attack");
 
-        //check if you hit anything with a raycast and run different command in different objects you hit
         RaycastHit _hitInfo;
         bool _hit = Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out _hitInfo, m_reach);
 
@@ -26,7 +25,12 @@ public class KatanaScript : MonoBehaviour
         {
             if (_hitInfo.collider.gameObject.CompareTag("PlayerBody"))
             {
-                m_knockbackScript.m_view.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_raySpawn.forward, 2);
+                PhotonView _targetView = _hitInfo.collider.GetComponentInParent<PhotonView>();
+                if (_targetView != null)
+                {
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_raySpawn.forward, 2);
+                }
+
             }
             else
             {

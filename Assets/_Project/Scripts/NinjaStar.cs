@@ -33,7 +33,11 @@ public class NinjaStar : MonoBehaviour
             if (other.gameObject.CompareTag("PlayerBody"))
             {
                 Knockback _knockbackScript = m_player.GetComponent<Knockback>();
-                _knockbackScript.m_view.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_moveDirection, 1);
+                 PhotonView _targetView = other.GetComponentInParent<PhotonView>();
+                if (_targetView != null)
+                {
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_moveDirection, 2);
+                }
             }
             else
             {

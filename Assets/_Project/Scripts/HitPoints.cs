@@ -6,16 +6,17 @@ public class HitPoints : MonoBehaviour
 {
     public int m_HP = 10;
     public PhotonView m_view;
-    GameManager m_gameManager;
+    [SerializeField] GameManager m_gameManager;
 
     private void Start()
     {
         m_view = GetComponent<PhotonView>();
-        m_gameManager = GameManager.FindFirstObjectByType<GameManager>();
+       
     }
 
     private void Update()
     {
+        GetGameManager();
         DestroyOnKill();
     }
 
@@ -37,6 +38,14 @@ public class HitPoints : MonoBehaviour
                 m_view.RPC("ManageOtherPlayer", RpcTarget.Others);
             }
             Destroy(gameObject);
+        }
+    }
+
+    protected void GetGameManager()
+    {
+        if (m_gameManager == null)
+        {
+            m_gameManager = GameManager.FindFirstObjectByType<GameManager>();
         }
     }
 }

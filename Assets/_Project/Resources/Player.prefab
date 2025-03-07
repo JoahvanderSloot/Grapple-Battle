@@ -274,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HP: 1000
   m_view: {fileID: 0}
+  m_gameManager: {fileID: 0}
 --- !u!114 &7371290892503749696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +438,7 @@ PrefabInstance:
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
       propertyPath: m_kbStrength
-      value: 30
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 358346383886641005, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}

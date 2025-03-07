@@ -9,12 +9,14 @@ public class Knockback : HitPoints
     private void Start()
     {
         m_view = GetComponent<PhotonView>();
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
+        GetGameManager();
         DestroyOnKill();
+       
     }
 
     [PunRPC]
@@ -24,4 +26,3 @@ public class Knockback : HitPoints
         m_rigidbody.AddForce(_direction * _knockBackStrength, ForceMode.Impulse);
     }
 }
-    
