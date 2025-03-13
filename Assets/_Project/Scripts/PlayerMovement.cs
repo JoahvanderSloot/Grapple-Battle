@@ -39,9 +39,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Other")]
     HitPoints m_hitPoints;
+    public bool m_inFocus;
 
     private void Start()
     {
+        m_inFocus = true;
         m_hitPoints = GetComponent<HitPoints>();
         m_JumpKey = playerSettings.Instance.jump;
         m_CrouchKey = playerSettings.Instance.crouch;
@@ -53,51 +55,58 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // ground check
-        float _playerHeight = m_playerCollider.height * m_playerCollider.gameObject.transform.localScale.y;
-        m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
+        if (m_inFocus)
+        {
+            // ground check
+            float _playerHeight = m_playerCollider.height * m_playerCollider.gameObject.transform.localScale.y;
+            m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
 
-        MyInput();
-        SpeedControl();
+            MyInput();
+            SpeedControl();
 
-        // handle drag
-        m_rb.drag = m_grounded ? m_GroundDrag : 0;
+            // handle drag
+            m_rb.drag = m_grounded ? m_GroundDrag : 0;
 
-        // Kill player in void
-        if (transform.position.y <= -10)
-        {;
-            float _decrementRate = 200;
-            m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
-
-            if (m_hitPoints.m_HP < 5)
+            // Kill player in void
+            if (transform.position.y <= -10)
             {
-                transform.position = new Vector3(0, 0, 0);
-                m_hitPoints.m_HP = 20;
+                
+                float _decrementRate = 200;
+                m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
+
+                //if (m_hitPoints.m_HP < 5)
+                //{
+                //    transform.position = new Vector3(0, 0, 0);
+                //    m_hitPoints.m_HP = 20;
+                //}
             }
-        }
 
-        // Adjust mass based on crouching in the air
-        if (!m_grounded && Input.GetKey(m_CrouchKey))
-        {
-            m_rb.mass = 5;
-        }
-        else
-        {
-            m_rb.mass = 2;
-        }
+            // Adjust mass based on crouching in the air
+            if (!m_grounded && Input.GetKey(m_CrouchKey))
+            {
+                m_rb.mass = 5;
+            }
+            else
+            {
+                m_rb.mass = 2;
+            }
 
-        m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
+            m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
+        }
     }
 
     private void OnApplicationFocus(bool focus)
     {
-        //when focus is true you can move when focus is false you cant
+        m_inFocus = focus;
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
-        WallJump();
+        if (m_inFocus)
+        {
+            MovePlayer();
+            WallJump();
+        }
     }
 
     private void MyInput()

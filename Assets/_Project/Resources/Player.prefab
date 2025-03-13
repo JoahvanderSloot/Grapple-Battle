@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Orientation: {fileID: 4244211781072309332}
   m_playerCollider: {fileID: 7831556725828690650}
   m_playerCam: {fileID: 8317515261817253727}
+  m_inFocus: 0
 --- !u!114 &2644770736310830791
 MonoBehaviour:
   m_ObjectHideFlags: 0

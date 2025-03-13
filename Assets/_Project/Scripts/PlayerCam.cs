@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
@@ -14,8 +15,12 @@ public class PlayerCam : MonoBehaviour
 
     bool m_crouchCam = false;
 
+    PlayerMovement m_movement;
+
     private void Start()
     {
+        m_movement = gameObject.GetComponentInParent<PlayerMovement>();
+
         m_SensX = playerSettings.Instance.sens;
         m_SensY = playerSettings.Instance.sens;
 
@@ -24,16 +29,19 @@ public class PlayerCam : MonoBehaviour
 
     private void Update()
     {
-        float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
-        float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;
+        if (m_movement.m_inFocus)
+        {
+            float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
+            float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;
 
-        m_yRotation += _mouseX;
+            m_yRotation += _mouseX;
 
-        m_xRotation -= _mouseY;
-        m_xRotation = Mathf.Clamp(m_xRotation, -90f, 90f);
+            m_xRotation -= _mouseY;
+            m_xRotation = Mathf.Clamp(m_xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
-        m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
+            transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
+            m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
+        }
     }
 
     public void FieldOfView(float _targetFOV, bool _crouch)

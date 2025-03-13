@@ -32,8 +32,12 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] float m_attackCooldown = 0.25f;
     float m_lastAttackTime = 0f;
 
+    PlayerMovement m_movement;
+
     private void Start()
     {
+        m_movement = gameObject.GetComponent<PlayerMovement>();
+
         if (GetComponent<PhotonView>().IsMine)
         {
             UImanager _UI = FindObjectOfType<UImanager>();
@@ -52,47 +56,50 @@ public class PlayerAttacks : MonoBehaviour
 
     void Update()
     {
-        CurrentItem();
-
-        if (Input.GetKeyDown(m_AttackKey) && Time.time >= m_lastAttackTime + m_attackCooldown && !m_isGrappling)
+        if (m_movement.m_inFocus)
         {
-            m_lastAttackTime = Time.time;
+            CurrentItem();
 
-            if (m_itemSlot == 1)
+            if (Input.GetKeyDown(m_AttackKey) && Time.time >= m_lastAttackTime + m_attackCooldown && !m_isGrappling)
             {
-                KatanaScript _katanaScript = m_katana.GetComponent<KatanaScript>();
-                _katanaScript.Attack();
+                m_lastAttackTime = Time.time;
+
+                if (m_itemSlot == 1)
+                {
+                    KatanaScript _katanaScript = m_katana.GetComponent<KatanaScript>();
+                    _katanaScript.Attack();
+                }
+                else if (m_itemSlot == 2 && m_StarCount >= 1)
+                {
+                    GameObject _star = Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
+                    NinjaStar _starScript = _star.GetComponent<NinjaStar>();
+                    _starScript.m_player = gameObject;
+                    m_StarCount--;
+                }
             }
-            else if (m_itemSlot == 2 && m_StarCount >= 1)
+
+            if (m_isGrappling && Input.GetKeyDown(m_AttackKey))
             {
-                GameObject _star = Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
-                NinjaStar _starScript = _star.GetComponent<NinjaStar>();
-                _starScript.m_player = gameObject;
-                m_StarCount--;
+                Vector3 _playerToGrapple = m_grapplingHookScript.GetGrapplePoint() - m_playerCam.transform.position;
+                _playerToGrapple.Normalize();
+
+                GetComponent<Rigidbody>().AddForce(_playerToGrapple * m_grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
+
+                m_grapplingHookScript.StopGrapple();
+                m_isGrappling = false;
             }
-        }
 
-        if(m_isGrappling && Input.GetKeyDown(m_AttackKey))
-        {
-            Vector3 _playerToGrapple = m_grapplingHookScript.GetGrapplePoint() - m_playerCam.transform.position;
-            _playerToGrapple.Normalize();
+            if (Input.GetKeyDown(m_GrappleKey) && m_grapplingHookScript.m_CanGrapple)
+            {
+                m_grapplingHookScript.StartGrapple();
+                m_isGrappling = true;
 
-            GetComponent<Rigidbody>().AddForce(_playerToGrapple * m_grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
-
-            m_grapplingHookScript.StopGrapple();
-            m_isGrappling = false;
-        }
-
-        if (Input.GetKeyDown(m_GrappleKey) && m_grapplingHookScript.m_CanGrapple)
-        {
-            m_grapplingHookScript.StartGrapple();
-            m_isGrappling = true;
-
-        }
-        if (Input.GetKeyUp(m_GrappleKey))
-        {
-            m_grapplingHookScript.StopGrapple();
-            m_isGrappling = false;
+            }
+            if (Input.GetKeyUp(m_GrappleKey))
+            {
+                m_grapplingHookScript.StopGrapple();
+                m_isGrappling = false;
+            }
         }
     }
 
