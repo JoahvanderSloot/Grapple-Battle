@@ -33,10 +33,11 @@ public class NinjaStar : MonoBehaviour
             if (other.gameObject.CompareTag("PlayerBody"))
             {
                 Knockback _knockbackScript = m_player.GetComponent<Knockback>();
-                 PhotonView _targetView = other.GetComponentInParent<PhotonView>();
+                PhotonView _targetView = other.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
                 {
-                    _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_moveDirection, 2);
+                    // Apply knockback and damage on all clients (including attacker)
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_moveDirection, 2);
                 }
             }
             else

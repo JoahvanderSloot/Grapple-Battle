@@ -243,6 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed6b56853e0f8c46b1b662f897b6a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_player: {fileID: 0}
+  m_grapplingGun: {fileID: 0}
   m_gameManager: {fileID: 1852187289}
   m_crossHair: {fileID: 1035602780}
   m_gameTimerText: {fileID: 585411687}

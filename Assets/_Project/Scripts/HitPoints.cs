@@ -2,27 +2,28 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HitPoints : MonoBehaviour
+public class HitPoints : MonoBehaviourPun
 {
     public int m_HP = 10;
     public PhotonView m_view;
-    [SerializeField] GameManager m_gameManager;
+    [SerializeField] private GameManager m_gameManager;
 
     private void Start()
     {
         m_view = GetComponent<PhotonView>();
-       
     }
 
     private void Update()
     {
-        GetGameManager();
         DestroyOnKill();
+        GetGameManager();
     }
 
     [PunRPC]
     public void ManageOtherPlayer()
     {
+        if (!photonView.IsMine) return;
+
         m_gameManager.m_GameSettings.m_OutCome = 1;
         SceneManager.LoadScene("GameOver");
     }
@@ -31,13 +32,17 @@ public class HitPoints : MonoBehaviour
     {
         if (m_HP <= 0)
         {
-            if(gameObject.tag == "Player")
+            if (gameObject.CompareTag("Player") && photonView.IsMine)
             {
+                m_view.RPC("ManageOtherPlayer", RpcTarget.Others);
                 m_gameManager.m_GameSettings.m_OutCome = 2;
                 SceneManager.LoadScene("GameOver");
-                m_view.RPC("ManageOtherPlayer", RpcTarget.Others);
             }
-            Destroy(gameObject);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 
@@ -45,7 +50,7 @@ public class HitPoints : MonoBehaviour
     {
         if (m_gameManager == null)
         {
-            m_gameManager = GameManager.FindFirstObjectByType<GameManager>();
+            m_gameManager = FindObjectOfType<GameManager>();
         }
     }
 }

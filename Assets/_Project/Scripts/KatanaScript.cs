@@ -7,9 +7,8 @@ public class KatanaScript : MonoBehaviour
     [SerializeField] Transform m_raySpawn;
     [SerializeField] float m_reach;
     [SerializeField] float m_kbStrength;
-    [SerializeField] Knockback m_knockbackScript;
 
-    void Start()
+    private void Start()
     {
         m_animator = GetComponent<Animator>();
     }
@@ -28,23 +27,25 @@ public class KatanaScript : MonoBehaviour
                 PhotonView _targetView = _hitInfo.collider.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
                 {
-                    _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_raySpawn.forward, 2);
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_raySpawn.forward, 2);
                 }
-
             }
             else
             {
                 HitPoints _hpScript = _hitInfo.collider.GetComponent<HitPoints>();
                 if (_hpScript != null)
                 {
-                    _hpScript.m_HP--;
+                    PhotonView objectView = _hitInfo.collider.GetComponent<PhotonView>();
+                    if (objectView != null && objectView.IsMine)
+                    {
+                        objectView.RPC("TakeDamage", RpcTarget.AllBuffered, 1);
+                    }
                 }
                 else
                 {
                     Debug.Log("Object does not have HP script");
                 }
             }
-
         }
     }
 

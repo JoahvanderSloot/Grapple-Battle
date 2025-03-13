@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class UImanager : MonoBehaviour
 {
     [Header("In Game Objects")]
-    GameObject m_player;
-    GameObject m_grapplingGun;
+    public GameObject m_player;
+    [SerializeField] GrapplingHook m_grapplingGun;
     [SerializeField] GameManager m_gameManager;
 
     [Header("UI Objects")]
@@ -18,15 +18,15 @@ public class UImanager : MonoBehaviour
 
     void Update()
     {
-        if (m_player == null || m_grapplingGun == null)
-        {
-            m_player = GameObject.FindGameObjectWithTag("Player");
-            m_grapplingGun = FindObjectOfType<GrapplingHook>().gameObject;
-        }
-        else
+        if(m_player != null)
         {
             m_playerHP.text = "HP " + m_player.GetComponent<Knockback>().m_HP.ToString();
             m_starCount.text = "Star Count " + m_player.GetComponent<PlayerAttacks>().m_StarCount.ToString();
+
+            if (m_grapplingGun == null)
+            {
+                m_grapplingGun = m_player.GetComponentInChildren<GrapplingHook>();
+            }
 
             CrossHair();
         }
@@ -58,5 +58,10 @@ public class UImanager : MonoBehaviour
         {
             m_crossHair.color = Color.black;
         }
+    }
+
+    public void SetPlayer(GameObject _player)
+    {
+        m_player = _player;
     }
 }

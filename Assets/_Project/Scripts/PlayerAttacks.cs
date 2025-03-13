@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +34,15 @@ public class PlayerAttacks : MonoBehaviour
 
     private void Start()
     {
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            UImanager _UI = FindObjectOfType<UImanager>();
+            if (_UI != null)
+            {
+                _UI.SetPlayer(gameObject);
+            }
+        }
+
         m_AttackKey = playerSettings.Instance.attack;
         m_GrappleKey = playerSettings.Instance.grapple;
 
