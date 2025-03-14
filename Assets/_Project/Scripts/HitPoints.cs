@@ -27,8 +27,8 @@ public class HitPoints : MonoBehaviourPun
         m_gameManager.m_GameSettings.m_OutCome = 1;
         SceneManager.LoadScene("GameOver");
 
-        PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.Disconnect();
+        //PhotonNetwork.LeaveRoom();
     }
 
     protected void DestroyOnKill()
@@ -42,7 +42,7 @@ public class HitPoints : MonoBehaviourPun
                 SceneManager.LoadScene("GameOver");
 
                 PhotonNetwork.Disconnect();
-                PhotonNetwork.LeaveRoom();
+                //PhotonNetwork.LeaveRoom();
             }
 
             if (PhotonNetwork.IsMasterClient)
