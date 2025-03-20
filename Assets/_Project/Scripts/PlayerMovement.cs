@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     [Header("Movement")]
     public float m_MoveSpeed;
@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_moveDirection;
 
     Rigidbody m_rb;
+    PhotonRigidbodyView m_photonRigidbodyView;
+    
     [SerializeField] CapsuleCollider m_playerCollider;
 
     [Header("Camera")]
@@ -43,6 +45,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        if (photonView.IsMine)
+        {
+            enabled = false;
+            return;
+        }
+
         m_inFocus = true;
         m_hitPoints = GetComponent<HitPoints>();
         m_JumpKey = playerSettings.Instance.jump;
@@ -51,48 +59,40 @@ public class PlayerMovement : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_rb.freezeRotation = true;
         m_readyToJump = true;
+
+        // Photon Rigidbody synchronisatie
+        m_photonRigidbodyView = GetComponent<PhotonRigidbodyView>();
+        if (m_photonRigidbodyView != null)
+        {
+            m_photonRigidbodyView.m_TeleportEnabled = true;
+            m_photonRigidbodyView.m_SynchronizeVelocity = true;
+            m_photonRigidbodyView.m_SynchronizeAngularVelocity = true;
+        }
     }
 
     private void Update()
     {
-        if (m_inFocus)
+        if (!m_inFocus || photonView.IsMine) return;
+
+        float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
+        m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
+
+        MyInput();
+        SpeedControl();
+
+        m_rb.drag = m_grounded ? m_GroundDrag : 0;
+
+        // Kill player in void
+        if (transform.position.y <= -10)
         {
-            // ground check
-            float _playerHeight = m_playerCollider.height * m_playerCollider.gameObject.transform.localScale.y;
-            m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
-
-            MyInput();
-            SpeedControl();
-
-            // handle drag
-            m_rb.drag = m_grounded ? m_GroundDrag : 0;
-
-            // Kill player in void
-            if (transform.position.y <= -10)
-            {
-                
-                float _decrementRate = 200;
-                m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
-
-                //if (m_hitPoints.m_HP < 5)
-                //{
-                //    transform.position = new Vector3(0, 0, 0);
-                //    m_hitPoints.m_HP = 20;
-                //}
-            }
-
-            // Adjust mass based on crouching in the air
-            if (!m_grounded && Input.GetKey(m_CrouchKey))
-            {
-                m_rb.mass = 5;
-            }
-            else
-            {
-                m_rb.mass = 2;
-            }
-
-            m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
+            float _decrementRate = 200;
+            m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
         }
+
+        // Verhoog massa bij crouchen in de lucht
+        m_rb.mass = (!m_grounded && Input.GetKey(m_CrouchKey)) ? 5 : 2;
+
+        m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
     }
 
     private void OnApplicationFocus(bool focus)
@@ -102,19 +102,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_inFocus)
-        {
-            MovePlayer();
-            WallJump();
-        }
-    }
+        if (!m_inFocus || photonView.IsMine) return;
+
+        MovePlayer();
+        WallJump();
+    }    
 
     private void MyInput()
     {
         m_horizontalInput = Input.GetAxisRaw("Horizontal");
         m_verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Jumping
         if (Input.GetKey(m_JumpKey) && m_readyToJump && m_grounded)
         {
             m_readyToJump = false;
@@ -122,7 +120,6 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), m_JumpCooldown);
         }
 
-        // Crouching
         if (Input.GetKeyDown(m_CrouchKey))
         {
             Crouch();
@@ -140,22 +137,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (m_rb == null) return;
 
-        // Calculate movement direction
         m_moveDirection = m_Orientation.forward * m_verticalInput + m_Orientation.right * m_horizontalInput;
 
-        // Apply movement force
         if (m_grounded)
             m_rb.AddForce(m_moveDirection.normalized * m_MoveSpeed * 10f, ForceMode.Force);
         else
             m_rb.AddForce(m_moveDirection.normalized * m_MoveSpeed * 10f * m_AirMultiplier, ForceMode.Force);
     }
 
-
     private void SpeedControl()
     {
         Vector3 _flatVel = new Vector3(m_rb.velocity.x, 0f, m_rb.velocity.z);
 
-        // Limit velocity if needed
         if (_flatVel.magnitude > m_MoveSpeed)
         {
             Vector3 limitedVel = _flatVel.normalized * m_MoveSpeed;
@@ -165,9 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        // Reset y velocity
         m_rb.velocity = new Vector3(m_rb.velocity.x, 0f, m_rb.velocity.z);
-
         m_rb.AddForce(transform.up * m_JumpForce, ForceMode.Impulse);
     }
 
@@ -180,7 +171,6 @@ public class PlayerMovement : MonoBehaviour
     {
         m_MoveSpeed = 3;
         m_GroundDrag = 8;
-
         m_readyToJump = false;
         m_isCrouching = true;
     }
@@ -189,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (m_grounded || !Input.GetKey(m_JumpKey) || !m_readyToJump) return;
 
-        float _playerHeight = m_playerCollider.height * m_playerCollider.gameObject.transform.localScale.y;
+        float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         float _detectionRadius = _playerHeight * 0.5f - 0.3f;
         Vector3 _wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
 
@@ -207,8 +197,6 @@ public class PlayerMovement : MonoBehaviour
         if (_playerCanWalljump)
         {
             m_readyToJump = false;
-
-            // Calculate the direction away from the wall
             Vector3 _wallDirection = (transform.position - _wallPosition).normalized;
             Vector3 _jumpDirection = Vector3.up + _wallDirection;
 
@@ -221,9 +209,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Draw gizmo for the ground detection ray
         Vector3 _endPosition = transform.position;
-        float _playerHeight = m_playerCollider.height * m_playerCollider.gameObject.transform.localScale.y;
+        float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         _endPosition.y -= _playerHeight * 0.5f + 0.3f;
 
         Gizmos.color = Color.yellow;

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,12 +16,18 @@ public class MenuButtons : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("MainScene");
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.LeaveRoom();
+        else
+            SceneManager.LoadScene("MainScene");
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("StartMenu");
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
+        else
+            SceneManager.LoadScene("StartMenu");
     }
 
     public void Settings()
@@ -39,15 +46,15 @@ public class MenuButtons : MonoBehaviour
 
     public void QuitGame()
     {
-        #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-            Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
-        #endif
-        #if (UNITY_EDITOR)
-            UnityEditor.EditorApplication.isPlaying = false;
-        #elif (UNITY_STANDALONE)
+#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+        Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+#endif
+#if (UNITY_EDITOR)
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif (UNITY_STANDALONE)
              Application.Quit();
-        #elif (UNITY_WEBGL)
+#elif (UNITY_WEBGL)
              Application.OpenURL("itch url ");
-        #endif
+#endif
     }
 }

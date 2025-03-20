@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttacks : MonoBehaviour
+public class PlayerAttacks : MonoBehaviourPun
 {
     [Header("Keybinds")]
     public KeyCode m_AttackKey;
@@ -25,6 +25,7 @@ public class PlayerAttacks : MonoBehaviour
     [SerializeField] GameObject m_playerCam;
 
     [SerializeField] GrapplingHook m_grapplingHookScript;
+    [SerializeField] GameObject m_hook;
 
     bool m_isGrappling = false;
 
@@ -38,13 +39,17 @@ public class PlayerAttacks : MonoBehaviour
     {
         m_movement = gameObject.GetComponent<PlayerMovement>();
 
-        if (GetComponent<PhotonView>().IsMine)
+        if (!photonView.IsMine)
         {
             UImanager _UI = FindObjectOfType<UImanager>();
             if (_UI != null)
             {
                 _UI.SetPlayer(gameObject);
             }
+        }
+        else
+        {
+            Debug.Log("niks");
         }
 
         m_AttackKey = playerSettings.Instance.attack;
@@ -56,7 +61,7 @@ public class PlayerAttacks : MonoBehaviour
 
     void Update()
     {
-        if (m_movement.m_inFocus)
+        if (m_movement.m_inFocus && !photonView.IsMine)
         {
             CurrentItem();
 
@@ -154,5 +159,7 @@ public class PlayerAttacks : MonoBehaviour
                 m_star.SetActive(false);
             }
         }
+
+        m_hook.SetActive(!m_isGrappling);
     }
 }
