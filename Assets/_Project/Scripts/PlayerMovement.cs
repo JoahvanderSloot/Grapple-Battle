@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviourPun
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     [Header("Movement")]
     public float m_MoveSpeed;
@@ -45,12 +45,6 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void Start()
     {
-        if (photonView.IsMine)
-        {
-            enabled = false;
-            return;
-        }
-
         m_inFocus = true;
         m_hitPoints = GetComponent<HitPoints>();
         m_JumpKey = playerSettings.Instance.jump;
@@ -72,7 +66,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void Update()
     {
-        if (!m_inFocus || photonView.IsMine) return;
+        if (!m_inFocus || !photonView.IsMine) return;
 
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
@@ -102,7 +96,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     private void FixedUpdate()
     {
-        if (!m_inFocus || photonView.IsMine) return;
+        if (!m_inFocus || !photonView.IsMine) return;
 
         MovePlayer();
         WallJump();

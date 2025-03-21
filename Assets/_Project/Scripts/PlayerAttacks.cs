@@ -39,7 +39,7 @@ public class PlayerAttacks : MonoBehaviourPun
     {
         m_movement = gameObject.GetComponent<PlayerMovement>();
 
-        if (!photonView.IsMine)
+        if (photonView.IsMine)
         {
             UImanager _UI = FindObjectOfType<UImanager>();
             if (_UI != null)
@@ -61,7 +61,7 @@ public class PlayerAttacks : MonoBehaviourPun
 
     void Update()
     {
-        if (m_movement.m_inFocus && !photonView.IsMine)
+        if (m_movement.m_inFocus && photonView.IsMine)
         {
             CurrentItem();
 

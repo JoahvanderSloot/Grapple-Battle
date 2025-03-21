@@ -1,7 +1,8 @@
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerCam : MonoBehaviour
+public class PlayerCam : MonoBehaviourPunCallbacks
 {
     public float m_SensY;
     public float m_SensX;
@@ -25,11 +26,15 @@ public class PlayerCam : MonoBehaviour
         m_SensY = playerSettings.Instance.sens;
 
         m_cam = GetComponent<Camera>();
+        if (!m_movement.photonView.IsMine)
+        {
+            m_cam.enabled = false;
+        }
     }
 
     private void Update()
     {
-        if (m_movement.m_inFocus)
+        if (m_movement.m_inFocus && m_movement.photonView.IsMine)
         {
             float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
             float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;

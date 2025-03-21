@@ -1,6 +1,8 @@
+using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
-public class PlayerTurn : MonoBehaviour
+public class PlayerTurn : MonoBehaviourPunCallbacks
 {
     public Transform m_PlayerPos;
 
