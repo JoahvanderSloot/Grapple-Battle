@@ -35,22 +35,11 @@ public class PlayerAttacks : MonoBehaviourPun
 
     PlayerMovement m_movement;
 
+    [SerializeField] UImanager m_UI;
+
     private void Start()
     {
         m_movement = gameObject.GetComponent<PlayerMovement>();
-
-        if (photonView.IsMine)
-        {
-            UImanager _UI = FindObjectOfType<UImanager>();
-            if (_UI != null)
-            {
-                _UI.SetPlayer(gameObject);
-            }
-        }
-        else
-        {
-            Debug.Log("niks");
-        }
 
         m_AttackKey = playerSettings.Instance.attack;
         m_GrappleKey = playerSettings.Instance.grapple;
@@ -61,6 +50,15 @@ public class PlayerAttacks : MonoBehaviourPun
 
     void Update()
     {
+        if (photonView.IsMine && m_UI == null)
+        {
+            m_UI = FindObjectOfType<UImanager>();
+            if (m_UI != null)
+            {
+                m_UI.SetPlayer(gameObject);
+            }
+        }
+
         if (m_movement.m_inFocus && photonView.IsMine)
         {
             CurrentItem();

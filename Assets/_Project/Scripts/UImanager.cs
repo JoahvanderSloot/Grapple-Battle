@@ -14,7 +14,6 @@ public class UImanager : MonoBehaviour
     [SerializeField] TextMeshProUGUI m_gameTimerText;
     [SerializeField] TextMeshProUGUI m_playerHP;
     [SerializeField] TextMeshProUGUI m_starCount;
-    [SerializeField] GameObject m_escMenu;
 
     void Update()
     {
@@ -31,20 +30,7 @@ public class UImanager : MonoBehaviour
             CrossHair();
         }
 
-        m_gameTimerText.text = m_gameManager.m_GameSettings.m_GameTimer.ToString();
-
-        m_escMenu.SetActive(m_gameManager.m_Paused);
-        if (m_gameManager.m_Paused)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        
+        m_gameTimerText.text = m_gameManager.m_GameSettings.m_GameTimer.ToString();       
     }
 
     private void CrossHair()

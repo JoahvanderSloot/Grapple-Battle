@@ -12,7 +12,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
     float m_xRotation;
     float m_yRotation;
 
-    Camera m_cam;
+    [SerializeField] Camera m_cam;
 
     bool m_crouchCam = false;
 
@@ -25,7 +25,6 @@ public class PlayerCam : MonoBehaviourPunCallbacks
         m_SensX = playerSettings.Instance.sens;
         m_SensY = playerSettings.Instance.sens;
 
-        m_cam = GetComponent<Camera>();
         if (!m_movement.photonView.IsMine)
         {
             m_cam.enabled = false;

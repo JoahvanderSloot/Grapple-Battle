@@ -44,6 +44,7 @@ MonoBehaviour:
   - DamageSelfs
   - TakeKnockback
   - ApplyKnockbackRPC
+  - SetWinner
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

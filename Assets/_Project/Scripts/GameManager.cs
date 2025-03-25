@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public GameSettings m_GameSettings;
     Coroutine m_gameTimeCoroutine;
-    public bool m_Paused;
     [SerializeField] Canvas m_canvas;
 
     [SerializeField] List<GameObject> m_players;
@@ -25,7 +24,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         m_GameSettings.m_GameTimer = m_GameSettings.m_GameTime;
-        m_Paused = false;
     }
 
     private void Update()
@@ -42,9 +40,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (m_GameStart)
         {
-            m_Paused = !m_Paused;
+            m_canvas.gameObject.SetActive(true);
         }
     }
 
