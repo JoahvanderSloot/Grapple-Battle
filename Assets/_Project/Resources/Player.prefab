@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3071fa77c66648be24fc405459169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 1000
+  m_HP: 20
 --- !u!114 &7371290892503749696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,6 +600,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632091808340807536, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
+      propertyPath: m_kbStrength
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4407869090875638562, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}

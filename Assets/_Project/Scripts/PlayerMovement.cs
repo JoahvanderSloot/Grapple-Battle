@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     Rigidbody m_rb;
     PhotonRigidbodyView m_photonRigidbodyView;
-    
+
     [SerializeField] CapsuleCollider m_playerCollider;
 
     [Header("Camera")]
@@ -66,6 +66,21 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        // Kill player in void
+        if (transform.position.y <= -10)
+        {
+            float _decrementRate = 200;
+            if (m_hitPoints.m_HP > 0)
+            {
+                m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
+            }
+            else
+            {
+                m_hitPoints.m_HP = 0;
+            }
+
+        }
+
         if (!m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
 
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
@@ -75,13 +90,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         SpeedControl();
 
         m_rb.drag = m_grounded ? m_GroundDrag : 0;
-
-        // Kill player in void
-        if (transform.position.y <= -10)
-        {
-            float _decrementRate = 200;
-            m_hitPoints.m_HP -= Mathf.FloorToInt(_decrementRate * Time.deltaTime);
-        }
 
         // Verhoog massa bij crouchen in de lucht
         m_rb.mass = (!m_grounded && Input.GetKey(m_CrouchKey)) ? 5 : 2;
@@ -100,7 +108,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         MovePlayer();
         WallJump();
-    }    
+    }
 
     private void MyInput()
     {

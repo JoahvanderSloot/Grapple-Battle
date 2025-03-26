@@ -33,19 +33,19 @@ public class PlayerCam : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (m_movement.m_inFocus && m_movement.photonView.IsMine)
-        {
-            float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
-            float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;
+        if (!m_movement.m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
 
-            m_yRotation += _mouseX;
+        float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * m_SensX;
+        float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * m_SensY;
 
-            m_xRotation -= _mouseY;
-            m_xRotation = Mathf.Clamp(m_xRotation, -90f, 90f);
+        m_yRotation += _mouseX;
 
-            transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
-            m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
-        }
+        m_xRotation -= _mouseY;
+        m_xRotation = Mathf.Clamp(m_xRotation, -90f, 90f);
+
+        transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
+        m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
+
     }
 
     public void FieldOfView(float _targetFOV, bool _crouch)
@@ -66,7 +66,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
         }
         else
         {
-            if(m_crouchCam)
+            if (m_crouchCam)
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
             }
