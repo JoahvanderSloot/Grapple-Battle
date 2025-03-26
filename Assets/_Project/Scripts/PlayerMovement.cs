@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (!m_inFocus || !photonView.IsMine) return;
+        if (!m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
 
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (!m_inFocus || !photonView.IsMine) return;
+        if (!m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
 
         MovePlayer();
         WallJump();

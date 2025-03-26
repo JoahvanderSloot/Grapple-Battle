@@ -1,22 +1,33 @@
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HitPoints : MonoBehaviourPun
 {
     public int m_HP = 10;
-    public PhotonView m_view;
-    [SerializeField] private GameManager m_gameManager;
-
-    private void Start()
-    {
-        m_view = GetComponent<PhotonView>();
-    }
 
     private void Update()
     {
         DestroyOnKill();
-        GetGameManager();
+
+        if(GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("Timer Ended");
+            OnDraw();
+        }
+    }
+
+    public void Timer()
+    {
+        GameManager.Instance.m_GameSettings.m_GameTimer--;
+        photonView.RPC("SetTimer", RpcTarget.Others, GameManager.Instance.m_GameSettings.m_GameTimer);
+    }
+
+    [PunRPC]
+    public void SetTimer(int _gameTime)
+    {
+        GameManager.Instance.m_GameSettings.m_GameTimer = _gameTime;
     }
 
     [PunRPC]
@@ -24,7 +35,7 @@ public class HitPoints : MonoBehaviourPun
     {
         if (!photonView.IsMine) return;
 
-        m_gameManager.m_GameSettings.m_OutCome = 1;
+        GameManager.Instance.m_GameSettings.m_OutCome = 1;
         SceneManager.LoadScene("GameOver");
     }
 
@@ -34,23 +45,37 @@ public class HitPoints : MonoBehaviourPun
         {
             if (gameObject.CompareTag("Player") && photonView.IsMine)
             {
-                m_view.RPC("ManageOtherPlayer", RpcTarget.Others);
-                m_gameManager.m_GameSettings.m_OutCome = 2;
-                SceneManager.LoadScene("GameOver");
-            }
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.Destroy(gameObject);
+                OnKilled();
             }
         }
     }
 
-    protected void GetGameManager()
+    public void OnKilled()
     {
-        if (m_gameManager == null)
-        {
-            m_gameManager = FindObjectOfType<GameManager>();
-        }
+        photonView.RPC("SetWinner", RpcTarget.Others, true);
+        SetWinner(false);
+    }
+
+    public void OnDraw()
+    {
+        photonView.RPC("SetDraw", RpcTarget.Others);
+        SetDraw();
+    }
+
+
+    [PunRPC]
+    public void SetWinner(bool _isWinner)
+    {
+        GameManager.Instance.IsResult = true;
+        GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = _isWinner ? "YOU WIN!" : "YOU LOSE!";
+        GameManager.Instance.ResultObj.SetActive(true);
+    }
+
+    [PunRPC]
+    public void SetDraw()
+    {
+        GameManager.Instance.IsResult = true;
+        GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "DRAW!";
+        GameManager.Instance.ResultObj.SetActive(true);
     }
 }

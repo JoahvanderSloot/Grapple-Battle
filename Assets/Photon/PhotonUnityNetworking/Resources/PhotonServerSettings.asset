@@ -45,6 +45,10 @@ MonoBehaviour:
   - TakeKnockback
   - ApplyKnockbackRPC
   - SetWinner
+  - OnDraw
+  - OnKilled
+  - SetDraw
+  - SetTimer
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

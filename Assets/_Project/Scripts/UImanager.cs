@@ -5,9 +5,7 @@ using UnityEngine.UI;
 public class UImanager : MonoBehaviour
 {
     [Header("In Game Objects")]
-    public GameObject m_player;
     [SerializeField] GrapplingHook m_grapplingGun;
-    [SerializeField] GameManager m_gameManager;
 
     [Header("UI Objects")]
     [SerializeField] Image m_crossHair;
@@ -17,20 +15,20 @@ public class UImanager : MonoBehaviour
 
     void Update()
     {
-        if(m_player != null)
+        if (!GameManager.Instance.LocalPlayer) return;
+
+        m_playerHP.text = "HP " + GameManager.Instance.LocalPlayer.GetComponent<Knockback>().m_HP.ToString();
+        m_starCount.text = "Star Count " + GameManager.Instance.LocalPlayer.GetComponent<PlayerAttacks>().m_StarCount.ToString();
+
+        if (m_grapplingGun == null)
         {
-            m_playerHP.text = "HP " + m_player.GetComponent<Knockback>().m_HP.ToString();
-            m_starCount.text = "Star Count " + m_player.GetComponent<PlayerAttacks>().m_StarCount.ToString();
-
-            if (m_grapplingGun == null)
-            {
-                m_grapplingGun = m_player.GetComponentInChildren<GrapplingHook>();
-            }
-
-            CrossHair();
+            m_grapplingGun = GameManager.Instance.LocalPlayer.GetComponentInChildren<GrapplingHook>();
         }
 
-        m_gameTimerText.text = m_gameManager.m_GameSettings.m_GameTimer.ToString();       
+        CrossHair();
+
+
+        m_gameTimerText.text = GameManager.Instance.m_GameSettings.m_GameTimer.ToString();
     }
 
     private void CrossHair()
@@ -44,10 +42,5 @@ public class UImanager : MonoBehaviour
         {
             m_crossHair.color = Color.black;
         }
-    }
-
-    public void SetPlayer(GameObject _player)
-    {
-        m_player = _player;
     }
 }

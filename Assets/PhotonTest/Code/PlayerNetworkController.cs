@@ -6,41 +6,48 @@ using UnityEngine;
 
 public class PlayerNetworkController : MonoBehaviourPunCallbacks
 {
-    public float MovementSpeed = 1f;
+    //public float MovementSpeed = 1f;
 
-    private void Start()
-    {
-        if (photonView.IsMine) // ben ik dit? kleur mezelf blauw
-            GetComponent<Renderer>().materials[0].color = Color.blue;
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    if (photonView.IsMine)
+    //    {
+    //        // geen UI zichtbaar? we kunnen bewegen
+    //        if (!GameManager.Instance.IsPaused && !GameManager.Instance.IsResult)
+    //            transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * MovementSpeed, 0, Input.GetAxis("Vertical") * Time.deltaTime * MovementSpeed);
+    //    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (photonView.IsMine)
-        {
-            // geen UI zichtbaar? we kunnen bewegen
-            if (!GameManagerTest.Instance.IsPaused && !GameManagerTest.Instance.IsResult)
-                transform.Translate(Input.GetAxis("Horizontal") * Time.deltaTime * MovementSpeed, 0, Input.GetAxis("Vertical") * Time.deltaTime * MovementSpeed);
-        }
-    }
+    //[PunRPC]
+    //public void OnKilled()
+    //{
+    //    // doe dingen
+    //    photonView.RPC("SetWinner", RpcTarget.Others, true);
+    //    SetWinner(false);
+    //}
 
-    public void OnKilled()
-    {
-        // doe dingen
-        photonView.RPC("SetWinner", RpcTarget.Others, true);
-        SetWinner(false);
-
-        // reset positie
-        transform.position = Vector3.zero + new Vector3(0, 1, 0); // met offset
-    }
+    //[PunRPC]
+    //public void OnDraw()
+    //{
+    //    // doe dingen
+    //    photonView.RPC("SetDraw", RpcTarget.Others);
+    //    SetDraw();
+    //}
 
 
-    [PunRPC]
-    public void SetWinner(bool _isWinner)
-    {
-        GameManagerTest.Instance.IsResult = true;
-        GameManagerTest.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = _isWinner ? "YOU WIN!" : "YOU LOSE!";
-        GameManagerTest.Instance.ResultObj.SetActive(true);
-    }
+    //[PunRPC]
+    //public void SetWinner(bool _isWinner)
+    //{
+    //    GameManager.Instance.IsResult = true;
+    //    GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = _isWinner ? "YOU WIN!" : "YOU LOSE!";
+    //    GameManager.Instance.ResultObj.SetActive(true);
+    //}
+
+    //public void SetDraw()
+    //{
+    //    GameManager.Instance.IsResult = true;
+    //    GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "DRAW!";
+    //    GameManager.Instance.ResultObj.SetActive(true);
+    //}
 }

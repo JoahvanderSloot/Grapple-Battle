@@ -14,20 +14,18 @@ public class MenuButtons : MonoBehaviour
         transform.localScale = new Vector2(1f, 1f);
     }
 
-    public void StartGame()
-    {
-        if (PhotonNetwork.IsConnected)
-            PhotonNetwork.LeaveRoom();
-        else
-            SceneManager.LoadScene("MainScene");
-    }
+    //public void StartGame()
+    //{
+    //    if (PhotonNetwork.IsConnected)
+    //        PhotonNetwork.LeaveRoom();
+    //    else
+    //        SceneManager.LoadScene("MainScene");
+    //}
 
     public void MainMenu()
     {
-        if (PhotonNetwork.IsConnected)
-            PhotonNetwork.Disconnect();
-        else
-            SceneManager.LoadScene("StartMenu");
+
+        SceneManager.LoadScene("Title");
     }
 
     public void Settings()
@@ -35,14 +33,14 @@ public class MenuButtons : MonoBehaviour
         SceneManager.LoadScene("Settings");
     }
 
-    public void Forfeit()
-    {
-        HitPoints _playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<HitPoints>();
-        if (_playerHP != null)
-        {
-            _playerHP.m_HP = 0;
-        }
-    }
+    //public void Forfeit()
+    //{
+    //    HitPoints _playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<HitPoints>();
+    //    if (_playerHP != null)
+    //    {
+    //        _playerHP.m_HP = 0;
+    //    }
+    //}
 
     public void QuitGame()
     {

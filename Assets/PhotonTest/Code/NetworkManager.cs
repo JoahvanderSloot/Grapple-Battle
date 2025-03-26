@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public GameObject m_ConnectingObj;
     public GameObject m_MatchmakingObj;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         m_MenuUI.interactable = false;
@@ -21,6 +20,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = "1.0"; // we verbinden alleen met games die dezelfde versie hebben
+        }
+        else
+        {
+            m_MenuUI.interactable = true;
+            m_ConnectingObj.SetActive(false);
         }
     }
 
