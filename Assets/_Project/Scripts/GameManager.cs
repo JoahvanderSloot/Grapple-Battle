@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public GameObject PauseMenuObj;
     public GameObject ResultObj;
+    public GameObject WaitingObj;
     public bool IsPaused;
     public bool IsRunning;
     public bool IsResult;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent(3, null, raiseEventOptions, SendOptions.SendReliable);
         }
+        WaitingObj.SetActive(true);
     }
 
     private void Update()
@@ -59,11 +61,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             // wil de local speler pauzeren, dat kan...
             if (Input.GetKeyDown(KeyCode.Escape) && !IsResult)
             {
-                PauseMenuObj.SetActive(!PauseMenuObj.activeInHierarchy); // toggle
+                PauseMenuObj.SetActive(!PauseMenuObj.activeInHierarchy);
                 IsPaused = PauseMenuObj.activeInHierarchy;
             }
 
-            if (IsPaused || IsResult)
+            if (IsPaused || IsResult || WaitingObj.activeInHierarchy)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -77,6 +79,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             if (IsResult)
             {
                 PauseMenuObj.SetActive(false);
+            }
+            if (IsRunning)
+            {
+                WaitingObj.SetActive(false);
+            }
+            if (WaitingObj.activeInHierarchy)
+            {
+                PauseMenuObj.SetActive(false);
+                IsPaused = false;
             }
         }
     }
@@ -93,7 +104,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-        // we zijn de kamer uit, dus we gaan weg naar title
         SceneManager.LoadScene("Title");
     }
 
@@ -106,8 +116,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ResumeGame()
     {
-        // de speler wilt gewoon verder spelen, dus zet pauze scherm uit
-        PauseMenuObj.SetActive(false); // toggle
+        PauseMenuObj.SetActive(false);
         IsPaused = PauseMenuObj.activeInHierarchy;
     }
 
@@ -118,15 +127,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void NewMatch()
     {
-        // Stuur een signaal naar andere spelers dat een nieuw spel gaat beginnen
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // iedereen
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 
-        // de "2" is gewoon een random code nummer, die vangen we op in de switch-case van "OnEvent" functie (zie onder)
         PhotonNetwork.RaiseEvent(2, null, raiseEventOptions, SendOptions.SendReliable);
     }
 
     // EVENTS
-    // we voegen event functionaliteit toe
     public override void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -139,10 +145,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         base.OnDisable();
     }
 
-    // hier vangen we globale events op, zoals als spelers iets doen wat invloed op de hele game heeft
     public void OnEvent(EventData photonEvent)
     {
-        switch (photonEvent.Code) // we checken welke code dit event heeft (zie PhotonNetwork.RaiseEvent boven)
+        switch (photonEvent.Code)
         {
             case 0: // give up
                 ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "GAME OVER";
@@ -151,19 +156,18 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 PauseMenuObj.SetActive(false);
                 IsPaused = false;
                 break;
-            case 1: // quit!
+            case 1: // quit
                 PhotonNetwork.LeaveRoom();
                 break;
-            case 2: // restart!
+            case 2: // restart
                 IsResult = false;
                 ResultObj.SetActive(false);
 
                 PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
 
-                // reload! 
                 PhotonNetwork.LoadLevel("Game");
                 break;
-            case 3:
+            case 3: //start
                 IsRunning = true;
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -177,15 +181,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         base.OnPlayerLeftRoom(otherPlayer);
 
-        // iemand anders is weggegaan
-        // check of er nog genoeg spelers zijn
         if (PhotonNetwork.CurrentRoom.PlayerCount < PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            // niet genoeg spelers, laat resultaat zien
             IsResult = true;
-            ResultObj.SetActive(true); // ziet alleen de overgebleven speler
+            ResultObj.SetActive(true);
         }
-        // als er wel genoeg spelers over zijn, gaat het spel gewoon door...
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
