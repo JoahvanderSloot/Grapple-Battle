@@ -89,6 +89,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 PauseMenuObj.SetActive(false);
                 IsPaused = false;
             }
+
+            if(m_GameSettings.m_GameTime < 0)
+            {
+                m_GameSettings.m_GameTime = 0;
+            }
         }
     }
 
