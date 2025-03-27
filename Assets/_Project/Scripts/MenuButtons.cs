@@ -14,14 +14,6 @@ public class MenuButtons : MonoBehaviour
         transform.localScale = new Vector2(1f, 1f);
     }
 
-    //public void StartGame()
-    //{
-    //    if (PhotonNetwork.IsConnected)
-    //        PhotonNetwork.LeaveRoom();
-    //    else
-    //        SceneManager.LoadScene("MainScene");
-    //}
-
     public void MainMenu()
     {
 
@@ -33,26 +25,18 @@ public class MenuButtons : MonoBehaviour
         SceneManager.LoadScene("Settings");
     }
 
-    //public void Forfeit()
-    //{
-    //    HitPoints _playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<HitPoints>();
-    //    if (_playerHP != null)
-    //    {
-    //        _playerHP.m_HP = 0;
-    //    }
-    //}
 
     public void QuitGame()
     {
-#if (UNITY_EDITOR || DEVELOPMENT_BUILD)
-        Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
-#endif
-#if (UNITY_EDITOR)
-        UnityEditor.EditorApplication.isPlaying = false;
-#elif (UNITY_STANDALONE)
+        #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
+            Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+        #endif
+        #if (UNITY_EDITOR)
+            UnityEditor.EditorApplication.isPlaying = false;
+        #elif (UNITY_STANDALONE)
              Application.Quit();
-#elif (UNITY_WEBGL)
+        #elif (UNITY_WEBGL)
              Application.OpenURL("itch url ");
-#endif
+        #endif
     }
 }

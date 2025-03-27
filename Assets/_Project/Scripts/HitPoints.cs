@@ -13,7 +13,6 @@ public class HitPoints : MonoBehaviourPun
 
         if(GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient)
         {
-            Debug.LogError("Timer Ended");
             OnDraw();
         }
     }
