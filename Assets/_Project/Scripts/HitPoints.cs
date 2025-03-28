@@ -1,7 +1,5 @@
 using Photon.Pun;
 using TMPro;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class HitPoints : MonoBehaviourPun
 {
@@ -29,18 +27,9 @@ public class HitPoints : MonoBehaviourPun
         GameManager.Instance.m_GameSettings.m_GameTimer = _gameTime;
     }
 
-    [PunRPC]
-    public void ManageOtherPlayer()
-    {
-        if (!photonView.IsMine) return;
-
-        GameManager.Instance.m_GameSettings.m_OutCome = 1;
-        SceneManager.LoadScene("GameOver");
-    }
-
     protected void DestroyOnKill()
     {
-        if (m_HP <= 0)
+        if (m_HP <= 0 && !GameManager.Instance.IsResult)
         {
             if (gameObject.CompareTag("Player") && photonView.IsMine)
             {
