@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
@@ -20,6 +21,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public bool IsPaused;
     public bool IsRunning;
     public bool IsResult;
+
+    public Image DamageFlash;
 
     private void Awake()
     {
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
             PhotonNetwork.RaiseEvent(3, null, raiseEventOptions, SendOptions.SendReliable);
         }
+
         WaitingObj.SetActive(true);
     }
 

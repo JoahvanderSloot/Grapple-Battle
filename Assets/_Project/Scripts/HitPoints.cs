@@ -1,15 +1,21 @@
 using Photon.Pun;
+using System.Collections;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class HitPoints : MonoBehaviourPun
 {
     public int m_HP = 10;
+    protected Coroutine m_hitCoroutine;
+    protected Coroutine m_flashCoroutine;
+    public ParticleSystem m_Blood;
 
     private void Update()
     {
         DestroyOnKill();
 
-        if(GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient)
+        if (GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient)
         {
             OnDraw();
         }
@@ -65,5 +71,46 @@ public class HitPoints : MonoBehaviourPun
         GameManager.Instance.IsResult = true;
         GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "DRAW!";
         GameManager.Instance.ResultObj.SetActive(true);
+    }
+
+    protected IEnumerator HitTick()
+    {
+        MeshRenderer _renderer = GetComponentInChildren<MeshRenderer>();
+
+        _renderer.material.color = Color.red;
+        m_Blood.Play();
+
+        yield return new WaitForSeconds(0.2f);
+
+        _renderer.material.color = Color.white;
+        m_Blood.Stop();
+
+        StopCoroutine(m_hitCoroutine);
+        m_hitCoroutine = null;
+    }
+
+    protected IEnumerator DamageFlash()
+    {
+        if (!photonView.IsMine) yield break;
+
+        for (float t = 0; t < 0.2f; t += Time.deltaTime)
+        {
+            Color color = GameManager.Instance.DamageFlash.color;
+            color.a = Mathf.Lerp(0, 0.5f, t / 0.2f);
+            GameManager.Instance.DamageFlash.color = color;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        for (float t = 0; t < 0.2f; t += Time.deltaTime)
+        {
+            Color color = GameManager.Instance.DamageFlash.color;
+            color.a = Mathf.Lerp(0.5f, 0, t / 0.2f);
+            GameManager.Instance.DamageFlash.color = color;
+            yield return null;
+        }
+
+        StopCoroutine(m_flashCoroutine);
     }
 }

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class UImanager : MonoBehaviour
 {
     [Header("In Game Objects")]
     [SerializeField] GrapplingHook m_grapplingGun;
+    [SerializeField] KatanaScript m_katanaScript;
 
     [Header("UI Objects")]
     [SerializeField] Image m_crossHair;
@@ -31,6 +33,10 @@ public class UImanager : MonoBehaviour
         {
             m_grapplingGun = GameManager.Instance.LocalPlayer.GetComponentInChildren<GrapplingHook>();
         }
+        if (m_katanaScript == null)
+        {
+            m_katanaScript = GameManager.Instance.LocalPlayer.GetComponentInChildren<KatanaScript>();
+        }
 
         CrossHair();
 
@@ -39,16 +45,20 @@ public class UImanager : MonoBehaviour
 
     private void CrossHair()
     {
-        GrapplingHook _grapplingHookScript = m_grapplingGun.GetComponent<GrapplingHook>();
-        if (_grapplingHookScript.m_CanGrapple)
+        if (m_grapplingGun && m_grapplingGun.m_CanGrapple && !m_katanaScript.m_CanHitPlayer)
         {
             m_crossHair.color = Color.green;
+        }
+        else if (m_katanaScript && m_katanaScript.m_CanHitPlayer)
+        {
+            m_crossHair.color = Color.red;
         }
         else
         {
             m_crossHair.color = Color.black;
         }
     }
+
 
     private IEnumerator AnimateDots()
     {

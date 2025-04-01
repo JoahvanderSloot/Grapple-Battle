@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +20,6 @@ public class PlayerAttacks : MonoBehaviourPun
     [Header("Shooting")]
     [SerializeField] Transform m_orientation;
 
-    [SerializeField] GameObject m_starPref;
     public int m_StarCount = 10;
 
     [SerializeField] GameObject m_playerCam;
@@ -34,8 +34,6 @@ public class PlayerAttacks : MonoBehaviourPun
     float m_lastAttackTime = 0f;
 
     PlayerMovement m_movement;
-
-    [SerializeField] UImanager m_UI;
 
     private void Start()
     {
@@ -64,7 +62,7 @@ public class PlayerAttacks : MonoBehaviourPun
             }
             else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
-                GameObject _star = Instantiate(m_starPref, m_playerCam.transform.position, m_playerCam.transform.rotation);
+                GameObject _star = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
                 NinjaStar _starScript = _star.GetComponent<NinjaStar>();
                 _starScript.m_player = gameObject;
                 m_StarCount--;

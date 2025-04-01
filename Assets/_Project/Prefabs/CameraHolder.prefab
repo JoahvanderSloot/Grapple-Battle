@@ -550,6 +550,7 @@ MonoBehaviour:
   m_SensY: 0
   m_SensX: 0
   m_Orientation: {fileID: 0}
+  m_cam: {fileID: 0}
 --- !u!1 &8180222546406216320
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 8180222546406216320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 687.0884, y: -3.8770828, z: 415.4602}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

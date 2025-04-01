@@ -7,10 +7,17 @@ public class KatanaScript : MonoBehaviour
     [SerializeField] Transform m_raySpawn;
     [SerializeField] float m_reach;
     [SerializeField] float m_kbStrength;
+    public bool m_CanHitPlayer;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        RaycastHit _hitInfo;
+        m_CanHitPlayer = PerformRaycast(out _hitInfo) && _hitInfo.collider.CompareTag("PlayerBody");
     }
 
     public void Attack()
@@ -18,11 +25,9 @@ public class KatanaScript : MonoBehaviour
         m_animator.SetTrigger("Attack");
 
         RaycastHit _hitInfo;
-        bool _hit = Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out _hitInfo, m_reach);
-
-        if (_hit)
+        if (PerformRaycast(out _hitInfo))
         {
-            if (_hitInfo.collider.gameObject.CompareTag("PlayerBody"))
+            if (_hitInfo.collider.CompareTag("PlayerBody"))
             {
                 PhotonView _targetView = _hitInfo.collider.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
@@ -41,12 +46,13 @@ public class KatanaScript : MonoBehaviour
                         objectView.RPC("TakeDamage", RpcTarget.AllBuffered, 1);
                     }
                 }
-                else
-                {
-                    Debug.Log("Object does not have HP script");
-                }
             }
         }
+    }
+
+    private bool PerformRaycast(out RaycastHit hitInfo)
+    {
+        return Physics.Raycast(m_raySpawn.position, m_raySpawn.forward, out hitInfo, m_reach);
     }
 
     private void OnDrawGizmosSelected()

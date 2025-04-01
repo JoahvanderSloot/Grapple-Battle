@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c40806b72d601045af3bf4446e9060f, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  m_GameTimer: 585
-  m_GameTime: 23
-  m_OutCome: 0
+  m_GameTimer: 0
+  m_GameTime: 400
   m_Audio: 0
   m_Music: 0

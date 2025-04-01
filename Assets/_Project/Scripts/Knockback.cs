@@ -14,6 +14,15 @@ public class Knockback : HitPoints
     public void DamageOtherPlayer(float _knockBackStrength, Vector3 _direction, int _damage)
     {
         m_HP -= _damage;
+        if(m_hitCoroutine == null)
+        {
+            m_hitCoroutine = StartCoroutine(HitTick());
+        }
+        if(m_flashCoroutine == null)
+        {
+            m_flashCoroutine = StartCoroutine(DamageFlash());
+        }
+        StartCoroutine(DamageFlash());
         photonView.RPC("ApplyKnockbackRPC", RpcTarget.All, _knockBackStrength, _direction);
         
     }
