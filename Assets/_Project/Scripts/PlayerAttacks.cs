@@ -62,9 +62,7 @@ public class PlayerAttacks : MonoBehaviourPun
             }
             else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
-                GameObject _star = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
-                NinjaStar _starScript = _star.GetComponent<NinjaStar>();
-                _starScript.m_player = gameObject;
+                PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
                 m_StarCount--;
             }
         }

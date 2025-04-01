@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class KatanaScript : MonoBehaviour
+public class KatanaScript : MonoBehaviourPunCallbacks
 {
     Animator m_animator;
     [SerializeField] Transform m_raySpawn;

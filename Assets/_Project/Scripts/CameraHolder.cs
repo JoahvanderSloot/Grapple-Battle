@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class CameraHolder : MonoBehaviourPunCallbacks
+public class CameraHolder : MonoBehaviour
 {
     public Transform m_CameraPosition;
     void Update()

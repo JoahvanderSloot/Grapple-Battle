@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class NinjaStar : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class NinjaStar : MonoBehaviour
     GameObject m_playerCam;
     Vector3 m_moveDirection;
     bool m_canDestroy = false;
-    public GameObject m_player;
+
+    PhotonView m_ownerView;
 
     void Start()
     {
@@ -28,16 +30,17 @@ public class NinjaStar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (m_canDestroy)
+        if (m_canDestroy && m_ownerView != null && !m_ownerView.IsMine)
         {
             if (other.gameObject.CompareTag("PlayerBody"))
             {
-                Knockback _knockbackScript = m_player.GetComponent<Knockback>();
+                Knockback _knockbackScript = other.GetComponentInParent<Knockback>();
                 PhotonView _targetView = other.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
                 {
                     // Apply knockback and damage on all clients (including attacker)
-                    _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_moveDirection, 2);
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_rb.velocity.normalized, 1);
+                    m_canDestroy = false;
                 }
             }
             else
@@ -47,19 +50,18 @@ public class NinjaStar : MonoBehaviour
                 {
                     _hpScript.m_HP--;
                 }
-                else
-                {
-                    Debug.Log("Object does not have HP script");
-                }
             }
 
             Destroy(gameObject);
         }
     }
 
-
     private void OnTriggerExit(Collider other)
     {
-        m_canDestroy = true;
+        if (other.gameObject.CompareTag("PlayerBody"))
+        {
+            m_ownerView = other.GetComponentInParent<PhotonView>();
+            m_canDestroy = true;
+        }
     }
 }
