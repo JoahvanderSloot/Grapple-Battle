@@ -18,8 +18,6 @@ public class PlayerAttacks : MonoBehaviourPun
     [SerializeField] int m_itemSlot = 1;
 
     [Header("Shooting")]
-    [SerializeField] Transform m_orientation;
-
     public int m_StarCount = 10;
 
     [SerializeField] GameObject m_playerCam;
@@ -62,7 +60,17 @@ public class PlayerAttacks : MonoBehaviourPun
             }
             else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
-                PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
+                GameObject _start = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
+                NinjaStar _starScript = _start.GetComponent<NinjaStar>();
+                if (_starScript.m_OwnerView == null)
+                {
+                    Debug.Log("FUCK IT WE BALL");
+                    _starScript.m_OwnerView = photonView;
+                }
+                else
+                {
+                    Debug.Log("WE DIDNT BALL AT ALL FUCKERS");
+                }
                 m_StarCount--;
             }
         }

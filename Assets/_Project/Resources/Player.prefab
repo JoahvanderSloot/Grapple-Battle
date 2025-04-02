@@ -255,7 +255,6 @@ MonoBehaviour:
   m_katana: {fileID: 8818734016905375274}
   m_star: {fileID: 2921015962945125489}
   m_itemSlot: 1
-  m_orientation: {fileID: 4244211781072309332}
   m_StarCount: 10
   m_playerCam: {fileID: 1344708588025150435}
   m_grapplingHookScript: {fileID: 2110222769204255775}

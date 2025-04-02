@@ -12,9 +12,8 @@ public class NinjaStar : MonoBehaviour
     [Header("Other")]
     GameObject m_playerCam;
     Vector3 m_moveDirection;
-    bool m_canDestroy = false;
 
-    PhotonView m_ownerView;
+    public PhotonView m_OwnerView;
 
     void Start()
     {
@@ -30,7 +29,7 @@ public class NinjaStar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (m_canDestroy && m_ownerView != null && !m_ownerView.IsMine)
+        if (m_OwnerView != null && !m_OwnerView.IsMine)
         {
             if (other.gameObject.CompareTag("PlayerBody"))
             {
@@ -40,7 +39,6 @@ public class NinjaStar : MonoBehaviour
                 {
                     // Apply knockback and damage on all clients (including attacker)
                     _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_rb.velocity.normalized, 1);
-                    m_canDestroy = false;
                 }
             }
             else
@@ -53,15 +51,6 @@ public class NinjaStar : MonoBehaviour
             }
 
             Destroy(gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("PlayerBody"))
-        {
-            m_ownerView = other.GetComponentInParent<PhotonView>();
-            m_canDestroy = true;
         }
     }
 }

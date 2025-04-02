@@ -7,13 +7,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public CanvasGroup m_MenuUI;
     public GameObject m_ConnectingObj;
-    public GameObject m_MatchmakingObj;
 
     void Start()
     {
         m_MenuUI.interactable = false;
         m_ConnectingObj.SetActive(true);
-        m_MatchmakingObj.SetActive(false);
 
         // Hier gaan we eerst verbinden
         if (!PhotonNetwork.IsConnectedAndReady)
@@ -77,6 +75,5 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // is er een probleem? Dan zorgen we ervoor dat de speler in ieder geval iets kan doen.
         m_MenuUI.interactable = true;
         m_ConnectingObj.SetActive(false);
-        m_MatchmakingObj.SetActive(false);
     }
 }
