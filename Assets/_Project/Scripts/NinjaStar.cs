@@ -1,8 +1,8 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class NinjaStar : MonoBehaviour
+public class NinjaStar : MonoBehaviourPun
 {
     [Header("Shooting")]
     Rigidbody m_rb;
@@ -24,7 +24,7 @@ public class NinjaStar : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_rb.AddForce(m_moveDirection.normalized * m_shootSpeed * 10f, ForceMode.Force);
 
-        Destroy(gameObject, 4);
+        StartCoroutine(PhotonDestroyAfterSeconds(4));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +37,6 @@ public class NinjaStar : MonoBehaviour
                 PhotonView _targetView = other.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
                 {
-                    // Apply knockback and damage on all clients (including attacker)
                     _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_rb.velocity.normalized, 1);
                 }
             }
@@ -50,7 +49,16 @@ public class NinjaStar : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+            StartCoroutine(PhotonDestroyAfterSeconds(0));
+        }
+    }
+
+    private IEnumerator PhotonDestroyAfterSeconds(float _seconds)
+    {
+        yield return new WaitForSeconds(_seconds);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

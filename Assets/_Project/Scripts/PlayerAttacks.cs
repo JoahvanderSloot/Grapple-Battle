@@ -85,11 +85,13 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
         {
             m_grapplingHookScript.StartGrapple();
             m_isGrappling = true;
+            photonView.RPC("SetHookActive", RpcTarget.All, false);
         }
         if (Input.GetKeyUp(m_GrappleKey))
         {
             m_grapplingHookScript.StopGrapple();
             m_isGrappling = false;
+            photonView.RPC("SetHookActive", RpcTarget.All, true);
         }
 
         if (photonView.IsMine)
@@ -154,7 +156,7 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void SetCurrentItem(int _itemSlot)
+    private void SetCurrentItem(int _itemSlot)
     {
         if (_itemSlot == 1)
         {
@@ -173,8 +175,12 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
                 m_star.SetActive(false);
             }
         }
+    }
 
-        m_hook.SetActive(!m_isGrappling);
+    [PunRPC]
+    private void SetHookActive(bool _active)
+    {
+        m_hook.SetActive(_active);
     }
 
 }
