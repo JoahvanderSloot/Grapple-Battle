@@ -38,7 +38,7 @@ public class NinjaStar : MonoBehaviour
                 if (_targetView != null)
                 {
                     // Apply knockback and damage on all clients (including attacker)
-                    _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_rb.velocity.normalized, 1);
+                    _targetView.RPC("DamageOtherPlayer", RpcTarget.Others, m_kbStrength, m_rb.velocity.normalized, 1);
                 }
             }
             else

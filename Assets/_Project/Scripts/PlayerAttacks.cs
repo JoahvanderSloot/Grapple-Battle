@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerAttacks : MonoBehaviourPun
+public class PlayerAttacks : MonoBehaviourPunCallbacks
 {
     [Header("Keybinds")]
     public KeyCode m_AttackKey;
@@ -64,12 +64,7 @@ public class PlayerAttacks : MonoBehaviourPun
                 NinjaStar _starScript = _start.GetComponent<NinjaStar>();
                 if (_starScript.m_OwnerView == null)
                 {
-                    Debug.Log("FUCK IT WE BALL");
                     _starScript.m_OwnerView = photonView;
-                }
-                else
-                {
-                    Debug.Log("WE DIDNT BALL AT ALL FUCKERS");
                 }
                 m_StarCount--;
             }
@@ -90,15 +85,18 @@ public class PlayerAttacks : MonoBehaviourPun
         {
             m_grapplingHookScript.StartGrapple();
             m_isGrappling = true;
-
         }
         if (Input.GetKeyUp(m_GrappleKey))
         {
             m_grapplingHookScript.StopGrapple();
             m_isGrappling = false;
         }
-    }
 
+        if (photonView.IsMine)
+        {
+            photonView.RPC("SetCurrentItem", RpcTarget.All, m_itemSlot);
+        }
+    }
 
     private void CurrentItem()
     {
@@ -154,4 +152,29 @@ public class PlayerAttacks : MonoBehaviourPun
 
         m_hook.SetActive(!m_isGrappling);
     }
+
+    [PunRPC]
+    void SetCurrentItem(int _itemSlot)
+    {
+        if (_itemSlot == 1)
+        {
+            m_katana.SetActive(true);
+            m_star.SetActive(false);
+        }
+        else if (_itemSlot == 2)
+        {
+            m_katana.SetActive(false);
+            if (m_StarCount > 0)
+            {
+                m_star.SetActive(true);
+            }
+            else
+            {
+                m_star.SetActive(false);
+            }
+        }
+
+        m_hook.SetActive(!m_isGrappling);
+    }
+
 }
