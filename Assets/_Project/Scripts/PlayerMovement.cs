@@ -95,6 +95,14 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         m_rb.mass = (!m_grounded && Input.GetKey(m_CrouchKey)) ? 5 : 2;
 
         m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
+        if (m_isCrouching)
+        {
+            transform.localScale = new Vector3(1, 0.85f, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     private void OnApplicationFocus(bool focus)

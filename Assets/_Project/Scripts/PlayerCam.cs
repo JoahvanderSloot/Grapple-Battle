@@ -9,6 +9,8 @@ public class PlayerCam : MonoBehaviourPunCallbacks
 
     public Transform m_Orientation;
 
+    public GameObject m_Face;
+
     float m_xRotation;
     float m_yRotation;
 
@@ -18,10 +20,17 @@ public class PlayerCam : MonoBehaviourPunCallbacks
 
     PlayerMovement m_movement;
 
+    [SerializeField] GameObject m_face;
+
     private void Start()
     {
         m_movement = gameObject.GetComponentInParent<PlayerMovement>();
 
+        if (m_movement.photonView.IsMine)
+        {
+            m_Face.SetActive(false);
+        }
+        
         m_SensX = playerSettings.Instance.sens;
         m_SensY = playerSettings.Instance.sens;
 
@@ -45,7 +54,6 @@ public class PlayerCam : MonoBehaviourPunCallbacks
 
         transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
         m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
-
     }
 
     public void FieldOfView(float _targetFOV, bool _crouch)

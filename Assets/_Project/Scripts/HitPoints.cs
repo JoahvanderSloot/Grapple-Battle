@@ -10,7 +10,8 @@ public class HitPoints : MonoBehaviourPun
     protected Coroutine m_hitCoroutine;
     protected Coroutine m_flashCoroutine;
     public ParticleSystem m_Blood;
-
+    [SerializeField] Color m_bodyDamageColor;
+ 
     private void Update()
     {
         DestroyOnKill();
@@ -77,12 +78,12 @@ public class HitPoints : MonoBehaviourPun
     {
         MeshRenderer _renderer = GetComponentInChildren<MeshRenderer>();
 
-        _renderer.material.color = Color.red;
+        _renderer.material.color = m_bodyDamageColor;
         m_Blood.Play();
 
         yield return new WaitForSeconds(0.2f);
 
-        _renderer.material.color = Color.white;
+        _renderer.material.color = Color.black;
         m_Blood.Stop();
 
         StopCoroutine(m_hitCoroutine);
@@ -95,9 +96,9 @@ public class HitPoints : MonoBehaviourPun
 
         for (float t = 0; t < 0.2f; t += Time.deltaTime)
         {
-            Color color = GameManager.Instance.DamageFlash.color;
-            color.a = Mathf.Lerp(0, 0.5f, t / 0.2f);
-            GameManager.Instance.DamageFlash.color = color;
+            Color _color = GameManager.Instance.DamageFlash.color;
+            _color.a = Mathf.Lerp(0, 0.5f, t / 0.2f);
+            GameManager.Instance.DamageFlash.color = _color;
             yield return null;
         }
 
@@ -105,9 +106,9 @@ public class HitPoints : MonoBehaviourPun
 
         for (float t = 0; t < 0.2f; t += Time.deltaTime)
         {
-            Color color = GameManager.Instance.DamageFlash.color;
-            color.a = Mathf.Lerp(0.5f, 0, t / 0.2f);
-            GameManager.Instance.DamageFlash.color = color;
+            Color _color = GameManager.Instance.DamageFlash.color;
+            _color.a = Mathf.Lerp(0.5f, 0, t / 0.2f);
+            GameManager.Instance.DamageFlash.color = _color;
             yield return null;
         }
 
