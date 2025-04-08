@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     private void Update()
     {
         // Kill player in void
-        if (transform.position.y <= -10)
+        if (transform.position.y <= -20)
         {
             float _decrementRate = 200;
             if (m_hitPoints.m_HP > 0)

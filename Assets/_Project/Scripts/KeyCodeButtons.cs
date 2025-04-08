@@ -77,7 +77,17 @@ public class KeyCodeButtons : MonoBehaviour
                     else
                     {
                         m_keyIsBeingUsed.SetActive(true);
+
+                        m_waitForKeyInput = false;
+                        m_selectedButtonIndex = -1;
+
+                        foreach (Button _button in m_allButtons)
+                        {
+                            _button.interactable = true;
+                            _button.GetComponent<Image>().color = Color.white;
+                        }
                     }
+
                 }
             }
         }
