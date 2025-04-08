@@ -2,6 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public Image DamageFlash;
 
+    [SerializeField] List<Transform> m_playerSpawns;
+
     private void Awake()
     {
         Instance = this;
@@ -37,7 +40,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             SceneManager.LoadScene("Title");
             return;
         }
-        LocalPlayer = PhotonNetwork.Instantiate("Player", Vector3.zero + new Vector3(0, 1f, 0), Quaternion.identity);
+
+        int _actorIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+
+        if (_actorIndex < m_playerSpawns.Count)
+        {
+            LocalPlayer = PhotonNetwork.Instantiate("Player", m_playerSpawns[_actorIndex].position + new Vector3(0, 1f, 0), Quaternion.identity);
+        }
+
         m_GameSettings.m_GameTimer = m_GameSettings.m_GameTime;
 
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= PhotonNetwork.CurrentRoom.MaxPlayers)
