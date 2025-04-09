@@ -42,9 +42,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     [Header("Other")]
     HitPoints m_hitPoints;
     public bool m_inFocus;
+    Animator m_anim;
 
     private void Start()
     {
+        m_anim = GetComponent<Animator>();
         m_inFocus = true;
         m_hitPoints = GetComponent<HitPoints>();
         m_JumpKey = playerSettings.Instance.jump;
@@ -97,11 +99,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
         if (m_isCrouching)
         {
-            transform.localScale = new Vector3(1, 0.85f, 1);
+            m_anim.SetBool("Crouch", true);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            m_anim.SetBool("Crouch", false);
         }
     }
 
@@ -120,6 +122,10 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         if (!m_grounded)
         {
             // fast fall
+        }
+        else
+        {
+            m_anim.SetFloat("Velo", m_rb.velocity.magnitude);
         }
     }
 
