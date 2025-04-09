@@ -23,11 +23,10 @@ public class Knockback : HitPoints
             m_flashCoroutine = StartCoroutine(DamageFlash());
         }
         StartCoroutine(DamageFlash());
-        photonView.RPC("ApplyKnockbackRPC", RpcTarget.All, _knockBackStrength, _direction);
-        
+        //photonView.RPC("ApplyKnockbackRPC", RpcTarget.All, _knockBackStrength, _direction);
+        ApplyKnockbackRPC(_knockBackStrength, _direction);
     }
 
-    [PunRPC]
     void ApplyKnockbackRPC(float _knockBackStrength, Vector3 _direction)
     {
         if (m_rigidbody != null)

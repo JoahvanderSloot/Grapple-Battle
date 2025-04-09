@@ -116,6 +116,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         MovePlayer();
         WallJump();
+
+        if (!m_grounded)
+        {
+            // fast fall
+        }
     }
 
     private void MyInput()

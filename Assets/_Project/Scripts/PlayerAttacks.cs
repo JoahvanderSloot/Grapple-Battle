@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -62,10 +63,11 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             {
                 GameObject _start = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
                 NinjaStar _starScript = _start.GetComponent<NinjaStar>();
-                if (_starScript.m_OwnerView == null)
-                {
-                    _starScript.m_OwnerView = photonView;
-                }
+                //  if (_starScript.m_OwnerView == null)
+                //{
+                _starScript.m_OwnerID = photonView.Owner.ActorNumber;
+                _starScript.photonView.RPC("SetOwner", RpcTarget.Others, photonView.Owner.ActorNumber);
+                // }
                 m_StarCount--;
             }
         }
@@ -183,4 +185,37 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
         m_hook.SetActive(_active);
     }
 
+
+    [PunRPC]
+    public void StopGrappleRPC()
+    {
+        if (m_grapplingHookScript.m_lr.positionCount > 0)
+        {
+            m_grapplingHookScript.m_lr.positionCount = 0;
+        }
+        m_grapplingHookScript.m_grapplePoint = Vector3.zero;
+        Destroy(m_grapplingHookScript.m_joint);
+    }
+
+    [PunRPC]
+    private void StartGrappleRPC(Vector3 _grapplePoint)
+    {
+        m_grapplingHookScript.m_grapplePoint = _grapplePoint;
+        m_grapplingHookScript.m_joint = gameObject.AddComponent<SpringJoint>();
+        m_grapplingHookScript.m_joint.autoConfigureConnectedAnchor = false;
+        m_grapplingHookScript.m_joint.connectedAnchor = m_grapplingHookScript.m_grapplePoint;
+
+        float _distanceFromPoint = Vector3.Distance(transform.position, m_grapplingHookScript.m_grapplePoint);
+
+        m_grapplingHookScript. m_joint.maxDistance = _distanceFromPoint * 0.8f;
+        m_grapplingHookScript.m_joint.minDistance = _distanceFromPoint * 0.25f;
+
+        m_grapplingHookScript.m_joint.spring = 4.5f;
+        m_grapplingHookScript.m_joint.damper = 7f;
+        m_grapplingHookScript.m_joint.massScale = 4.5f;
+
+        m_grapplingHookScript.m_lr.positionCount = 2;
+
+        m_grapplingHookScript.DrawRopeRPC(transform.position, m_grapplingHookScript.m_grapplePoint);
+    }
 }

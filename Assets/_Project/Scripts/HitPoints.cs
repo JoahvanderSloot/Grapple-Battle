@@ -11,7 +11,14 @@ public class HitPoints : MonoBehaviourPun
     protected Coroutine m_flashCoroutine;
     public ParticleSystem m_Blood;
     [SerializeField] Color m_bodyDamageColor;
- 
+    [SerializeField] Material m_bodyMaterial;
+    public PhotonView m_PhotonView;
+
+    private void Awake()
+    {
+        m_PhotonView = photonView;
+    }
+
     private void Update()
     {
         DestroyOnKill();
@@ -76,14 +83,12 @@ public class HitPoints : MonoBehaviourPun
 
     protected IEnumerator HitTick()
     {
-        MeshRenderer _renderer = GetComponentInChildren<MeshRenderer>();
-
-        _renderer.material.color = m_bodyDamageColor;
+        m_bodyMaterial.color = m_bodyDamageColor;
         m_Blood.Play();
 
         yield return new WaitForSeconds(0.2f);
 
-        _renderer.material.color = Color.black;
+        m_bodyMaterial.color = Color.black;
         m_Blood.Stop();
 
         StopCoroutine(m_hitCoroutine);

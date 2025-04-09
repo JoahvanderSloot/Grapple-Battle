@@ -58,6 +58,7 @@ MonoBehaviour:
   - StopGrappleRPC
   - DrawRopeRPC
   - SetHookActive
+  - SetOwner
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
