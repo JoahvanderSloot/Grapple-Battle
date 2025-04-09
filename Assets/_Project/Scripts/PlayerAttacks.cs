@@ -63,11 +63,9 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             {
                 GameObject _start = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
                 NinjaStar _starScript = _start.GetComponent<NinjaStar>();
-                //  if (_starScript.m_OwnerView == null)
-                //{
                 _starScript.m_OwnerID = photonView.Owner.ActorNumber;
                 _starScript.photonView.RPC("SetOwner", RpcTarget.Others, photonView.Owner.ActorNumber);
-                // }
+                
                 m_StarCount--;
             }
         }

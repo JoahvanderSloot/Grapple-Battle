@@ -20,6 +20,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
 
     [SerializeField] Transform m_bodyTrans;
     [SerializeField] GameObject m_body;
+    [SerializeField] GameObject m_face;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
         if (m_movement.photonView.IsMine)
         {
             m_body.SetActive(false);
+            m_face.SetActive(false);
         }
         
         m_SensX = playerSettings.Instance.sens;
@@ -54,7 +56,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
         transform.rotation = Quaternion.Euler(m_xRotation, m_yRotation, 0);
         m_Orientation.rotation = Quaternion.Euler(0, m_yRotation, 0);
 
-        m_body.transform.rotation = Quaternion.Euler(0, m_yRotation, 0);
+        m_bodyTrans.transform.rotation = Quaternion.Euler(0, m_yRotation, 0);
     }
 
     public void FieldOfView(float _targetFOV, bool _crouch)
@@ -69,7 +71,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
             _newFOV = Mathf.Lerp(_currentFOV, 57, Time.deltaTime * _smoothSpeed);
             if (!m_crouchCam)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y - 0.05f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z);
                 m_crouchCam = true;
             }
         }
@@ -77,7 +79,7 @@ public class PlayerCam : MonoBehaviourPunCallbacks
         {
             if (m_crouchCam)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.25f, transform.position.z);
             }
             m_crouchCam = false;
         }

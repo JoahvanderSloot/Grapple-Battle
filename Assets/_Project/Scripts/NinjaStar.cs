@@ -29,14 +29,18 @@ public class NinjaStar : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (m_OwnerID > 0 && other.gameObject.GetComponentInParent<PhotonView>().OwnerActorNr != m_OwnerID)
+        if (other.gameObject.CompareTag("PlayerBody"))
         {
-            if (other.gameObject.CompareTag("PlayerBody"))
+            if (m_OwnerID > 0 && other.gameObject.GetComponentInParent<PhotonView>().OwnerActorNr != m_OwnerID)
             {
+
                 Knockback _knockbackScript = other.GetComponentInParent<Knockback>();
                 _knockbackScript.m_PhotonView.RPC("DamageOtherPlayer", RpcTarget.All, m_kbStrength, m_rb.velocity.normalized, 1);
+                StartCoroutine(PhotonDestroyAfterSeconds(0));
             }
-
+        }
+        else
+        {
             StartCoroutine(PhotonDestroyAfterSeconds(0));
         }
     }

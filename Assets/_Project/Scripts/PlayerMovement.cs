@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         if (!m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
 
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
-        m_grounded = Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
+        m_grounded = Physics.Raycast(m_playerCollider.transform.position, Vector3.down, _playerHeight * 0.5f + 0.1f, m_WhatIsGround);
 
         MyInput();
         SpeedControl();
@@ -119,13 +119,16 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         MovePlayer();
         WallJump();
 
-        if (!m_grounded)
+        if (m_grounded)
         {
-            // fast fall
+            m_anim.SetFloat("Velo", m_rb.velocity.magnitude);
+            m_anim.SetBool("Grounded", true);
         }
         else
         {
-            m_anim.SetFloat("Velo", m_rb.velocity.magnitude);
+            m_anim.SetFloat("Velo", 0);
+            m_anim.SetBool("Grounded", false);
+            // Fast fall
         }
     }
 
@@ -202,7 +205,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         float _detectionRadius = _playerHeight * 0.5f - 0.3f;
-        Vector3 _wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        Vector3 _wallJumpSpherePos = new Vector3(m_playerCollider.transform.position.x, m_playerCollider.transform.position.y - 0.5f, m_playerCollider.transform.position.z);
 
         Collider[] _hitColliders = Physics.OverlapSphere(_wallJumpSpherePos, _detectionRadius, m_WhatIsGround);
         bool _playerCanWalljump = false;
@@ -230,15 +233,15 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void OnDrawGizmos()
     {
-        Vector3 _endPosition = transform.position;
+        Vector3 _endPosition = m_playerCollider.transform.position;
         float _playerHeight = m_playerCollider.height * m_playerCollider.transform.localScale.y;
         _endPosition.y -= _playerHeight * 0.5f + 0.3f;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, _endPosition);
+        Gizmos.DrawLine(m_playerCollider.transform.position, _endPosition);
 
         float _detectionRadius = _playerHeight * 0.5f - 0.3f;
-        Vector3 _wallJumpSpherePos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        Vector3 _wallJumpSpherePos = new Vector3(m_playerCollider.transform.position.x, m_playerCollider.transform.position.y - 0.5f, m_playerCollider.transform.position.z);
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(_wallJumpSpherePos, _detectionRadius);
     }
