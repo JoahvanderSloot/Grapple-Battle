@@ -8,6 +8,7 @@ public class KatanaScript : MonoBehaviourPunCallbacks
     [SerializeField] float m_reach;
     [SerializeField] float m_kbStrength;
     public bool m_CanHitPlayer;
+    [SerializeField] Collider m_ownBody;
 
     private void Start()
     {
@@ -17,7 +18,17 @@ public class KatanaScript : MonoBehaviourPunCallbacks
     private void Update()
     {
         RaycastHit _hitInfo;
-        m_CanHitPlayer = PerformRaycast(out _hitInfo) && _hitInfo.collider.CompareTag("PlayerBody");
+        if(PerformRaycast(out _hitInfo))
+        {
+            if(_hitInfo.collider.CompareTag("PlayerBody") && _hitInfo.collider != m_ownBody)
+            {
+                m_CanHitPlayer = true;
+            }
+        }
+        else
+        {
+            m_CanHitPlayer = false;
+        }
     }
 
     public void Attack()

@@ -2849,8 +2849,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632091808340807536, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}
+      propertyPath: m_ownBody
+      value: 
+      objectReference: {fileID: 7831556725828690650}
+    - target: {fileID: 3632091808340807536, guid: fe2c505add56433419ed8a6a33ce55ff,
+        type: 3}
       propertyPath: m_kbStrength
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 4407869090875638562, guid: fe2c505add56433419ed8a6a33ce55ff,
         type: 3}

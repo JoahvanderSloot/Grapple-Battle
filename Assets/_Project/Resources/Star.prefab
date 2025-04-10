@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_shootSpeed: 100
-  m_kbStrength: 5
+  m_kbStrength: 7
   m_OwnerID: 0
 --- !u!54 &6984225340863634598
 Rigidbody:
