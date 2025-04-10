@@ -4,12 +4,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     [Header("Movement")]
-    public float m_MoveSpeed;
+    public float m_BaseSpeed;
     public float m_GroundDrag;
     public float m_JumpForce;
     public float m_JumpCooldown;
     public float m_AirMultiplier;
     public float m_WallJumpForce;
+    float m_moveSpeed;
     bool m_readyToJump;
 
     [HideInInspector] public float m_WalkSpeed;
@@ -120,10 +121,24 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         }
         else
         {
+            Vector3 _vel = m_rb.velocity;
+            if (GetComponent<PlayerAttacks>().m_IsGrappling)
+            {
+                //_vel.x = _vel.x * 1.5f;
+                //_vel.z = _vel.z * 1.5f;
+                m_moveSpeed = m_BaseSpeed + 5;
+            }
+            else
+            {
+                m_moveSpeed = m_BaseSpeed;
+            }
+            _vel.y -= 15f * Time.fixedDeltaTime;
+            m_rb.velocity = _vel;
+
             m_anim.SetFloat("Velo", 0);
-            // Fast fall
         }
     }
+
 
     private void MyInput()
     {
@@ -143,7 +158,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         }
         else if (Input.GetKeyUp(m_CrouchKey))
         {
-            m_MoveSpeed = 7;
+            m_moveSpeed = 7;
             m_GroundDrag = 5;
             m_readyToJump = true;
             m_isCrouching = false;
@@ -157,18 +172,18 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         m_moveDirection = m_Orientation.forward * m_verticalInput + m_Orientation.right * m_horizontalInput;
 
         if (m_grounded)
-            m_rb.AddForce(m_moveDirection.normalized * m_MoveSpeed * 10f, ForceMode.Force);
+            m_rb.AddForce(m_moveDirection.normalized * m_moveSpeed * 10f, ForceMode.Force);
         else
-            m_rb.AddForce(m_moveDirection.normalized * m_MoveSpeed * 10f * m_AirMultiplier, ForceMode.Force);
+            m_rb.AddForce(m_moveDirection.normalized * m_moveSpeed * 10f * m_AirMultiplier, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
         Vector3 _flatVel = new Vector3(m_rb.velocity.x, 0f, m_rb.velocity.z);
 
-        if (_flatVel.magnitude > m_MoveSpeed)
+        if (_flatVel.magnitude > m_moveSpeed)
         {
-            Vector3 limitedVel = _flatVel.normalized * m_MoveSpeed;
+            Vector3 limitedVel = _flatVel.normalized * m_moveSpeed;
             m_rb.velocity = new Vector3(limitedVel.x, m_rb.velocity.y, limitedVel.z);
         }
     }
@@ -186,7 +201,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void Crouch()
     {
-        m_MoveSpeed = 3;
+        m_moveSpeed = 3;
         m_GroundDrag = 8;
         m_readyToJump = false;
         m_isCrouching = true;

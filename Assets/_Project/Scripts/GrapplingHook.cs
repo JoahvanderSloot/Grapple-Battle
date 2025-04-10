@@ -21,7 +21,7 @@ public class GrapplingHook : MonoBehaviourPun
 
     public float GetGrappleForce()
     {
-        return 30f;
+        return 50f;
     }
 
     private void Awake()

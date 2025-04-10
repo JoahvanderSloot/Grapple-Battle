@@ -26,7 +26,7 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
     [SerializeField] GrapplingHook m_grapplingHookScript;
     [SerializeField] GameObject m_hook;
 
-    bool m_isGrappling = false;
+    [HideInInspector] public bool m_IsGrappling = false;
 
     [Header("Cooldown")]
     [SerializeField] float m_attackCooldown = 0.25f;
@@ -50,7 +50,7 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
         if (!m_movement.m_inFocus || !photonView.IsMine || GameManager.Instance.IsPaused || GameManager.Instance.IsResult || !GameManager.Instance.IsRunning) return;
         CurrentItem();
 
-        if (Input.GetKeyDown(m_AttackKey) && Time.time >= m_lastAttackTime + m_attackCooldown && !m_isGrappling)
+        if (Input.GetKeyDown(m_AttackKey) && Time.time >= m_lastAttackTime + m_attackCooldown && !m_IsGrappling)
         {
             m_lastAttackTime = Time.time;
 
@@ -70,7 +70,7 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             }
         }
 
-        if (m_isGrappling && Input.GetKeyDown(m_AttackKey))
+        if (m_IsGrappling && Input.GetKeyDown(m_AttackKey))
         {
             Vector3 _playerToGrapple = m_grapplingHookScript.GetGrapplePoint() - m_playerCam.transform.position;
             _playerToGrapple.Normalize();
@@ -78,19 +78,19 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             GetComponent<Rigidbody>().AddForce(_playerToGrapple * m_grapplingHookScript.GetGrappleForce(), ForceMode.Impulse);
 
             m_grapplingHookScript.StopGrapple();
-            m_isGrappling = false;
+            m_IsGrappling = false;
         }
 
         if (Input.GetKeyDown(m_GrappleKey) && m_grapplingHookScript.m_CanGrapple)
         {
             m_grapplingHookScript.StartGrapple();
-            m_isGrappling = true;
+            m_IsGrappling = true;
             photonView.RPC("SetHookActive", RpcTarget.All, false);
         }
         if (Input.GetKeyUp(m_GrappleKey))
         {
             m_grapplingHookScript.StopGrapple();
-            m_isGrappling = false;
+            m_IsGrappling = false;
             photonView.RPC("SetHookActive", RpcTarget.All, true);
         }
 
@@ -152,7 +152,7 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             }
         }
 
-        m_hook.SetActive(!m_isGrappling);
+        m_hook.SetActive(!m_IsGrappling);
     }
 
     [PunRPC]
