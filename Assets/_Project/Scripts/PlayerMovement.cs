@@ -124,8 +124,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             Vector3 _vel = m_rb.velocity;
             if (GetComponent<PlayerAttacks>().m_IsGrappling)
             {
-                //_vel.x = _vel.x * 1.5f;
-                //_vel.z = _vel.z * 1.5f;
                 m_moveSpeed = m_BaseSpeed + 5;
             }
             else
