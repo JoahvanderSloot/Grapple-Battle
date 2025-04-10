@@ -6,6 +6,15 @@ public class SetKeybinds : MonoBehaviour
 
     private void Start()
     {
+        if (AudioManager.m_Instance.IsPlaying("GameMusic"))
+        {
+            AudioManager.m_Instance.Stop("GameMusic");
+        }
+        if (!AudioManager.m_Instance.IsPlaying("MenuMusic"))
+        {
+            AudioManager.m_Instance.Play("MenuMusic");
+        }
+
         if(m_PlayerSettings.jump == KeyCode.None)
         {
             m_PlayerSettings.jump = KeyCode.Space;

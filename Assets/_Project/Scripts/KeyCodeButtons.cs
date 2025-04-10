@@ -30,6 +30,7 @@ public class KeyCodeButtons : MonoBehaviour
 
     public void SetKeyCode(int _buttonIndex)
     {
+        AudioManager.m_Instance.Play("Click");
         m_waitForKeyInput = true;
         m_selectedButtonIndex = _buttonIndex;
 
@@ -76,6 +77,7 @@ public class KeyCodeButtons : MonoBehaviour
                     }
                     else
                     {
+                        AudioManager.m_Instance.Play("Error");
                         m_keyIsBeingUsed.SetActive(true);
 
                         m_waitForKeyInput = false;

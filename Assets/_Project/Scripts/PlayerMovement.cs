@@ -118,9 +118,23 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         if (m_grounded)
         {
             m_anim.SetFloat("Velo", m_rb.velocity.magnitude);
+
+            if (m_rb.velocity.magnitude > 0.5f && !AudioManager.m_Instance.IsPlaying("Footsteps"))
+            {
+                AudioManager.m_Instance.Play("Footsteps");
+            }
+            else if (m_rb.velocity.magnitude <= 0.5f && AudioManager.m_Instance.IsPlaying("Footsteps"))
+            {
+                AudioManager.m_Instance.Stop("Footsteps");
+            }
         }
         else
         {
+            if (AudioManager.m_Instance.IsPlaying("Footsteps"))
+            {
+                AudioManager.m_Instance.Stop("Footsteps");
+            }
+
             Vector3 _vel = m_rb.velocity;
             if (GetComponent<PlayerAttacks>().m_IsGrappling)
             {
@@ -136,7 +150,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             m_anim.SetFloat("Velo", 0);
         }
     }
-
 
     private void MyInput()
     {
@@ -188,6 +201,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void Jump()
     {
+        AudioManager.m_Instance.Play("Jump");
         m_rb.velocity = new Vector3(m_rb.velocity.x, 0f, m_rb.velocity.z);
         m_rb.AddForce(transform.up * m_JumpForce, ForceMode.Impulse);
     }
@@ -199,6 +213,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private void Crouch()
     {
+        AudioManager.m_Instance.Play("Crouch");
         m_moveSpeed = 3;
         m_GroundDrag = 8;
         m_readyToJump = false;
@@ -229,6 +244,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             m_readyToJump = false;
             Vector3 _wallDirection = (transform.position - _wallPosition).normalized;
             Vector3 _jumpDirection = Vector3.up + _wallDirection;
+
+            AudioManager.m_Instance.Play("Jump");
 
             m_rb.velocity = new Vector3(m_rb.velocity.x, 0f, m_rb.velocity.z);
             m_rb.AddForce(_jumpDirection * m_WallJumpForce, ForceMode.Impulse);

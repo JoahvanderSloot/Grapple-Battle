@@ -21,6 +21,7 @@ public class StartRefill : MonoBehaviour
         {
             if(_playerAttack.m_StarCount < 10)
             {
+                AudioManager.m_Instance.Play("Pickup");
                 _playerAttack.m_StarCount = 10;
                 m_onCooldown = true;
             }
@@ -35,6 +36,7 @@ public class StartRefill : MonoBehaviour
             m_timer += Time.deltaTime * 2;
             if(m_timer >= m_cooldown)
             {
+                AudioManager.m_Instance.Play("Recharge");
                 m_onCooldown = false;
                 m_timer = 0;
                 m_orb.SetActive(true);

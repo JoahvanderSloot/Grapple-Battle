@@ -36,7 +36,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // HOST
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom("Test", new Photon.Realtime.RoomOptions() { MaxPlayers = 2 }); // we maken een nieuwe room, max 2 spelers
+        PhotonNetwork.CreateRoom("GameRoom", new Photon.Realtime.RoomOptions() { MaxPlayers = 2 }); // we maken een nieuwe room, max 2 spelers
     }
 
     public override void OnCreatedRoom()
@@ -51,11 +51,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // PLAYER
     public void JoinRoom()
     {
+        AudioManager.m_Instance.Play("Click");
         // we gaan een room vinden, en anders een nieuwe maken
         m_MenuUI.interactable = true;
         m_ConnectingObj.SetActive(false);
 
-        PhotonNetwork.JoinOrCreateRoom("Test", new Photon.Realtime.RoomOptions() { MaxPlayers = 2 }, null);
+        PhotonNetwork.JoinOrCreateRoom("GameRoom", new Photon.Realtime.RoomOptions() { MaxPlayers = 2 }, null);
     }
 
     public override void OnJoinedRoom()

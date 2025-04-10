@@ -29,7 +29,7 @@ public class AudioButtons : MonoBehaviour
     public void PointerEnter()
     {
         transform.localScale = new Vector2(1.05f, 1.05f);
-        // FindObjectOfType<AudioManager>().Play("Hover");
+        AudioManager.m_Instance.Play("Hover");
     }
 
     public void PointerExit()
@@ -41,10 +41,9 @@ public class AudioButtons : MonoBehaviour
     {
         if (audioButton != null)
         {
-            // FindObjectOfType<AudioManager>().Play("Click");
+            AudioManager.m_Instance.Play("Hover");
             m_gameSettings.m_Audio = !m_gameSettings.m_Audio;
             UpdateButtonSprite(audioButton, m_gameSettings.m_Audio);
-
         }
     }
 
@@ -52,19 +51,19 @@ public class AudioButtons : MonoBehaviour
     {
         if (musicButton != null)
         {
-            if (m_gameSettings.m_Music)
-            {
-                // FindObjectOfType<AudioManager>().StopAllSounds();
-            }
-            else
-            {
-                // FindObjectOfType<AudioManager>().Play("MenuBCM");
-            }
-            // FindObjectOfType<AudioManager>().Play("Click");
-
             m_gameSettings.m_Music = !m_gameSettings.m_Music;
             UpdateButtonSprite(musicButton, m_gameSettings.m_Music);
 
+            if (m_gameSettings.m_Music)
+            {
+                AudioManager.m_Instance.Play("MenuMusic");
+            }
+            else
+            {
+                AudioManager.m_Instance.StopAllSounds();
+            }
+
+            AudioManager.m_Instance.Play("Click");
         }
     }
 

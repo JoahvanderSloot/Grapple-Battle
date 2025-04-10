@@ -6,6 +6,7 @@ public class MenuButtons : MonoBehaviour
 {
     public void PointerEnter()
     {
+        AudioManager.m_Instance.Play("Hover");
         transform.localScale = new Vector2(1.1f, 1.1f);
     }
 
@@ -16,18 +17,20 @@ public class MenuButtons : MonoBehaviour
 
     public void MainMenu()
     {
-
+        AudioManager.m_Instance.Play("Click");
         SceneManager.LoadScene("Title");
     }
 
     public void Settings()
     {
+        AudioManager.m_Instance.Play("Click");
         SceneManager.LoadScene("Settings");
     }
 
 
     public void QuitGame()
     {
+        AudioManager.m_Instance.Play("Click");
         #if (UNITY_EDITOR || DEVELOPMENT_BUILD)
             Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
         #endif

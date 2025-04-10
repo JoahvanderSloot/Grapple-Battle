@@ -13,17 +13,19 @@ public class HitPoints : MonoBehaviourPun
     [SerializeField] Color m_bodyDamageColor;
     [SerializeField] Material m_bodyMaterial;
     public PhotonView m_PhotonView;
+    bool m_drawSet;
 
     private void Awake()
     {
         m_PhotonView = photonView;
+        m_drawSet = false;
     }
 
     private void Update()
     {
         DestroyOnKill();
 
-        if (GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient)
+        if (GameManager.Instance.m_GameSettings.m_GameTimer <= 0 && PhotonNetwork.IsMasterClient && !m_drawSet)
         {
             OnDraw();
         }
@@ -62,6 +64,7 @@ public class HitPoints : MonoBehaviourPun
     {
         photonView.RPC("SetDraw", RpcTarget.Others);
         SetDraw();
+        m_drawSet = true;
     }
 
 
@@ -71,6 +74,8 @@ public class HitPoints : MonoBehaviourPun
         GameManager.Instance.IsResult = true;
         GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = _isWinner ? "YOU WIN!" : "YOU LOSE!";
         GameManager.Instance.ResultObj.SetActive(true);
+        AudioManager.m_Instance.Play("Game");
+        AudioManager.m_Instance.Stop("Footsteps");
     }
 
     [PunRPC]
@@ -79,12 +84,15 @@ public class HitPoints : MonoBehaviourPun
         GameManager.Instance.IsResult = true;
         GameManager.Instance.ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "DRAW!";
         GameManager.Instance.ResultObj.SetActive(true);
+        AudioManager.m_Instance.Play("Game");
+        AudioManager.m_Instance.Stop("Footsteps");
     }
 
     protected IEnumerator HitTick()
     {
         m_bodyMaterial.color = m_bodyDamageColor;
         m_Blood.Play();
+        AudioManager.m_Instance.Play("Damage");
 
         yield return new WaitForSeconds(0.2f);
 

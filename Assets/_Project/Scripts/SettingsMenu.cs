@@ -30,6 +30,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void OnInputFieldValueChanged(string value_)
     {
+        AudioManager.m_Instance.Play("Click");
         if (int.TryParse(value_, out int _inputValue))
         {
             _inputValue = Mathf.Clamp(_inputValue, 10, 1000);

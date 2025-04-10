@@ -34,6 +34,7 @@ public class KatanaScript : MonoBehaviourPunCallbacks
     public void Attack()
     {
         m_animator.SetTrigger("Attack");
+        AudioManager.m_Instance.Play("Swoosh");
 
         RaycastHit _hitInfo;
         if (PerformRaycast(out _hitInfo))
@@ -43,6 +44,7 @@ public class KatanaScript : MonoBehaviourPunCallbacks
                 PhotonView _targetView = _hitInfo.collider.GetComponentInParent<PhotonView>();
                 if (_targetView != null)
                 {
+                    AudioManager.m_Instance.Play("Hit");
                     _targetView.RPC("DamageOtherPlayer", RpcTarget.AllBuffered, m_kbStrength, m_raySpawn.forward, 2);
                 }
             }

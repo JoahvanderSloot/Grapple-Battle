@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void QuitGame()
     {
+        AudioManager.m_Instance.Play("Click");
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 
         PhotonNetwork.RaiseEvent(1, null, raiseEventOptions, SendOptions.SendReliable);
@@ -135,17 +136,20 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public void ResumeGame()
     {
+        AudioManager.m_Instance.Play("Click");
         PauseMenuObj.SetActive(false);
         IsPaused = PauseMenuObj.activeInHierarchy;
     }
 
     public void GiveUp()
     {
+        AudioManager.m_Instance.Play("Click");
         LocalPlayer.GetComponent<HitPoints>().OnKilled();
     }
 
     public void NewMatch()
     {
+        AudioManager.m_Instance.Play("Click");
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 
         PhotonNetwork.RaiseEvent(2, null, raiseEventOptions, SendOptions.SendReliable);
@@ -169,6 +173,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case 0: // give up
+                AudioManager.m_Instance.Play("Game");
+                AudioManager.m_Instance.Stop("Footsteps");
                 ResultObj.GetComponentInChildren<TextMeshProUGUI>().text = "GAME OVER";
                 IsResult = true;
                 ResultObj.SetActive(true);
@@ -185,6 +191,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
 
                 PhotonNetwork.LoadLevel("Game");
+                AudioManager.m_Instance.Stop("Footsteps");
                 break;
             case 3: //start
                 IsRunning = true;
@@ -192,6 +199,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 {
                     StartCoroutine(GameTimer());
                 }
+                AudioManager.m_Instance.Play("Game");
+                if (AudioManager.m_Instance.IsPlaying("MenuMusic"))
+                {
+                    AudioManager.m_Instance.Stop("MenuMusic");
+                }
+                AudioManager.m_Instance.Play("GameMusic");
                 break;
         }
     }

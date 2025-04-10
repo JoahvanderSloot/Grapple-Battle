@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameTimer: 0
   m_GameTime: 200
-  m_Audio: 0
-  m_Music: 0
+  m_Audio: 1
+  m_Music: 1

@@ -61,6 +61,8 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
             }
             else if (m_itemSlot == 2 && m_StarCount >= 1)
             {
+                AudioManager.m_Instance.Play("Star");
+
                 GameObject _start = PhotonNetwork.Instantiate("Star", m_playerCam.transform.position, m_playerCam.transform.rotation);
                 NinjaStar _starScript = _start.GetComponent<NinjaStar>();
                 _starScript.m_OwnerID = photonView.Owner.ActorNumber;
@@ -72,6 +74,8 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
 
         if (m_IsGrappling && Input.GetKeyDown(m_AttackKey))
         {
+            AudioManager.m_Instance.Play("Pull");
+
             Vector3 _playerToGrapple = m_grapplingHookScript.GetGrapplePoint() - m_playerCam.transform.position;
             _playerToGrapple.Normalize();
 
@@ -83,6 +87,8 @@ public class PlayerAttacks : MonoBehaviourPunCallbacks
 
         if (Input.GetKeyDown(m_GrappleKey) && m_grapplingHookScript.m_CanGrapple)
         {
+            AudioManager.m_Instance.Play("Shoot");
+
             m_grapplingHookScript.StartGrapple();
             m_IsGrappling = true;
             photonView.RPC("SetHookActive", RpcTarget.All, false);
