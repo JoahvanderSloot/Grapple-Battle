@@ -97,14 +97,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         m_rb.mass = (!m_grounded && Input.GetKey(m_CrouchKey)) ? 5 : 2;
 
         m_playerCam.FieldOfView(m_rb.velocity.magnitude, m_isCrouching);
-        if (m_isCrouching)
-        {
-            m_anim.SetBool("Crouch", true);
-        }
-        else
-        {
-            m_anim.SetBool("Crouch", false);
-        }
+        m_anim.SetBool("Crouch", m_isCrouching);
     }
 
     private void OnApplicationFocus(bool focus)
@@ -119,15 +112,15 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         MovePlayer();
         WallJump();
 
+        m_anim.SetBool("Grounded", m_grounded);
+
         if (m_grounded)
         {
             m_anim.SetFloat("Velo", m_rb.velocity.magnitude);
-            m_anim.SetBool("Grounded", true);
         }
         else
         {
             m_anim.SetFloat("Velo", 0);
-            m_anim.SetBool("Grounded", false);
             // Fast fall
         }
     }
