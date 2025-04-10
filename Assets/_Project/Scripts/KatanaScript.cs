@@ -24,6 +24,10 @@ public class KatanaScript : MonoBehaviourPunCallbacks
             {
                 m_CanHitPlayer = true;
             }
+            else
+            {
+                m_CanHitPlayer = false;
+            }
         }
         else
         {
