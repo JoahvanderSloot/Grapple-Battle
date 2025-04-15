@@ -39,7 +39,7 @@ public class MenuButtons : MonoBehaviour
         #elif (UNITY_STANDALONE)
              Application.Quit();
         #elif (UNITY_WEBGL)
-             Application.OpenURL("itch url ");
+             Application.OpenURL("https://joahvds.itch.io/grapple-battle");
         #endif
     }
 }
